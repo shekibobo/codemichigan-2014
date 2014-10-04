@@ -90,12 +90,13 @@ public class MainActivity extends FragmentActivity
 
         actionBar.setTitle(getCurrentTitle());
 
+        dataService = new MichiganData().getDataService();
+        resourceArray = new ArrayList<>();
+
         // Set up the drawer.
         mFilterDrawerFragment.setUp(
                 R.id.filter_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
-
-        dataService = new MichiganData().getDataService();
 
         reloadResourcesFromFilters();
     }

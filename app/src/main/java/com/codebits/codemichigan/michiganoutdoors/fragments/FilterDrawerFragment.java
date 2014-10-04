@@ -86,9 +86,6 @@ public class FilterDrawerFragment extends Fragment {
             mCurrentSelectedPosition = savedInstanceState.getInt(STATE_SELECTED_POSITION);
             mFromSavedInstanceState = true;
         }
-
-        // Select either the default item (0) or the last selected item.
-        selectItem(mCurrentSelectedPosition);
     }
 
     @Override
@@ -125,8 +122,6 @@ public class FilterDrawerFragment extends Fragment {
             filterItemsCheckStatus[i] = false;
         }
 
-        mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
-        filterItemsCheckStatus[mCurrentSelectedPosition] = true;
         return mDrawerListView;
     }
 
@@ -206,6 +201,9 @@ public class FilterDrawerFragment extends Fragment {
         });
 
         mDrawerLayout.setDrawerListener(mDrawerToggle);
+
+        // Select either the default item (0) or the last selected item.
+        selectItem(mCurrentSelectedPosition);
     }
 
     private void selectItem(int position) {
