@@ -1,9 +1,16 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        config {
+            keyAlias 'CodeMichigan'
+            keyPassword 'jellyfish'
+            storeFile file('/home/kenny/keystores/CodeMichigan.jks')
+            storePassword 'jellyfish'
+        }
+    }
     compileSdkVersion 20
     buildToolsVersion "20.0.0"
-
     defaultConfig {
         applicationId "com.codebits.codemichigan.michiganoutdoors"
         minSdkVersion 15
@@ -22,7 +29,7 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:support-v4:20.0.0'
-
+    compile 'com.google.android.gms:play-services:5.+'
     compile 'com.jakewharton:butterknife:5.1.+'
     provided 'org.projectlombok:lombok:1.14.+'
 }
