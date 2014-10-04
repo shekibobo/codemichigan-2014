@@ -10,4 +10,8 @@
     <string name="action_example">Example action</string>
     <string name="action_settings">Settings</string>
 
+    <string name="drawer_open">Filter by Category</string>
+    <string name="drawer_close">Swipe to Filter</string>
+    <string name="action_bar_filter_text">Filter</string>
+
 </resources>
