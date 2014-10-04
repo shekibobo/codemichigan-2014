@@ -18,7 +18,7 @@ public class StateLandAttraction extends MichiganAttraction {
     @Getter String ttynum;
 
     @SerializedName("unittype") @Getter String unitType;
-    @SerializedName("unitdescription") String resourceType;
+    @SerializedName("unitdescription") @Getter String resourceType;
     @Getter String description;
     @Getter String county;
 

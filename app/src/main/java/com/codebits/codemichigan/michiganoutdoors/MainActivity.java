@@ -104,10 +104,10 @@ public class MainActivity extends FragmentActivity
 
     private void updateDataSet(List<? extends MichiganAttraction> s) {
         resourceArray.addAll(s);
-        //Log.i("All the stuff", resourceArray.toString());
-//        pagerAdapter.getAttractionFragmentListView().getAdapter().addAll(resourceArray);
-//        pagerAdapter.getAttractionFragmentListView().getAdapter().notifyDataSetChanged();
-        // TODO: Update the active adapters
+//        Log.i("All the stuff", resourceArray.toString());
+        pagerAdapter.getAttractionFragmentListView().getAdapter().clear();
+        pagerAdapter.getAttractionFragmentListView().getAdapter().addAll(resourceArray);
+        pagerAdapter.getAttractionFragmentListView().getAdapter().notifyDataSetChanged();
     }
 
 
