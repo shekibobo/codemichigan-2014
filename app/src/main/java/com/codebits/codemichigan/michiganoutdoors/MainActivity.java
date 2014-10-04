@@ -10,30 +10,18 @@ import android.support.v4.widget.DrawerLayout;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.location.Location;
 import android.util.Log;
 
 import com.codebits.codemichigan.michiganoutdoors.data.api.services.MichiganData;
-import com.codebits.codemichigan.michiganoutdoors.data.api.services.MichiganDataGson;
 import com.codebits.codemichigan.michiganoutdoors.data.api.services.MichiganDataService;
-import com.codebits.codemichigan.michiganoutdoors.data.api.services.MichiganDataRequestIntercepter;
-import com.codebits.codemichigan.michiganoutdoors.data.models.MichiganDataResource;
 import com.codebits.codemichigan.michiganoutdoors.data.models.StateLandAttraction;
 import com.codebits.codemichigan.michiganoutdoors.data.models.StateWaterAttraction;
-import com.codebits.codemichigan.michiganoutdoors.data.type_adapters.BooleanAsIntTypeAdapter;
-import com.codebits.codemichigan.michiganoutdoors.data.type_adapters.LocationTypeAdapter;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import java.util.List;
 
-import retrofit.RestAdapter;
-import retrofit.converter.GsonConverter;
 import rx.Observable;
 import rx.android.observables.AndroidObservable;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 import com.codebits.codemichigan.michiganoutdoors.adapters.MainPagerAdapter;
