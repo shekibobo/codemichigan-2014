@@ -5,6 +5,6 @@ package com.codebits.codemichigan.michiganoutdoors.data.models;
  */
 public class LakeAttraction extends StateWaterAttraction {
     public static String toQuery() {
-        return equalsCondition("county", "lake");
+        return equalsCondition("county", "Lake");
     }
 }

@@ -31,6 +31,15 @@
         <item>@drawable/ic_launcher</item>
     </string-array>
 
+    <string-array name="attraction_icons">
+        <item>@drawable/ic_launcher</item>
+        <item>@drawable/ic_launcher</item>
+        <item>@drawable/ic_launcher</item>
+        <item>@drawable/ic_launcher</item>
+        <item>@drawable/ic_launcher</item>
+        <item>@drawable/ic_launcher</item>
+    </string-array>
+
     <string name="filter_drawer_header_text">Tap to Filter</string>
 
 </resources>
