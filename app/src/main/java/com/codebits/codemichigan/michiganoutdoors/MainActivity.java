@@ -148,6 +148,7 @@ public class MainActivity extends FragmentActivity
     }
 
     private void updateDataSet(List<? extends MichiganAttraction> s) {
+        updateHeaderView();
         resourceArray.addAll(s);
         pagerAdapter.getAttractionFragmentListView().getAdapter().clear();
         pagerAdapter.getAttractionFragmentListView().getAdapter().addAll(resourceArray);
@@ -177,6 +178,36 @@ public class MainActivity extends FragmentActivity
 
     private String getCurrentTitle() {
         return MainPagerAdapter.TITLES[pager.getCurrentItem()];
+    }
+
+    private void updateHeaderView() {
+        String text="";
+        if (mFilterDrawerFragment.isChecked(FilterDrawerFragment.CAMPGROUND_FILTER_INDEX))
+            text = text + " " + "Campgrounds,";
+
+        if (mFilterDrawerFragment.isChecked(FilterDrawerFragment.VISITOR_CENTER_FILTER_INDEX))
+            text = text + " " + "Visitor Centers,";
+
+        if (mFilterDrawerFragment.isChecked(FilterDrawerFragment.TRAIL_FILTER_INDEX))
+            text = text + " " + "Trails,";
+
+        if (mFilterDrawerFragment.isChecked(FilterDrawerFragment.STATE_PARK_FILTER_INDEX))
+            text = text + " " + "State Parks,";
+
+        if (mFilterDrawerFragment.isChecked(FilterDrawerFragment.LAKE_FILTER_INDEX))
+            text = text + " " + "Lakes,";
+
+        if (mFilterDrawerFragment.isChecked(FilterDrawerFragment.STREAM_FILTER_INDEX))
+            text = text + " " + "Streams,";
+
+        if (!text.equals("")) {
+            text = text.substring(0, text.length() - 1);
+        } else {
+            text = "Swipe Right for Attractions!";
+        }
+
+        pagerAdapter.getAttractionFragmentListView().getHeaderView().setText(text);
+
     }
 
     @Override
@@ -211,5 +242,6 @@ public class MainActivity extends FragmentActivity
     public void listNavigationButtonClicked() {
         pager.setCurrentItem(MainPagerAdapter.LIST_FRAGMENT_INDEX);
         actionBar.setTitle(getCurrentTitle());
+
     }
 }
