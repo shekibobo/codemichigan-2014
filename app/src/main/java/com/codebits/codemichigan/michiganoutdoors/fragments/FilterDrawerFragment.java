@@ -18,7 +18,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -53,6 +52,7 @@ public class FilterDrawerFragment extends Fragment {
      */
     private ActionBarDrawerToggle mDrawerToggle;
 
+    private TextView headerView;
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerListView;
     private View mFragmentContainerView;
@@ -103,15 +103,19 @@ public class FilterDrawerFragment extends Fragment {
             }
         });
 
+        headerView = (TextView) inflater.inflate(R.layout.filter_drawer_header, container, false);
+        mDrawerListView.addHeaderView(headerView);
+
         FilterDrawerAdapter drawerAdapter = new FilterDrawerAdapter(getActivity().getApplicationContext(),
                 R.id.filter_name);
 
         mDrawerListView.setAdapter(drawerAdapter);
+
+        // Initialize boolean array to track checked items
         filterItemsCheckStatus  = new boolean[mDrawerListView.getCount()];
         for (int i=0; i < filterItemsCheckStatus.length; i++) {
             filterItemsCheckStatus[i] = false;
         }
-
 
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
         filterItemsCheckStatus[mCurrentSelectedPosition] = true;
@@ -200,9 +204,11 @@ public class FilterDrawerFragment extends Fragment {
         mCurrentSelectedPosition = position;
         if (mDrawerListView != null) {
             if (filterItemsCheckStatus[position]) {
+                // Set listView item and tracking array item
                 mDrawerListView.setItemChecked(position, false);
                 filterItemsCheckStatus[position] = false;
             } else {
+                // Set lisView item and tracking array item
                 mDrawerListView.setItemChecked(position, true);
                 filterItemsCheckStatus[position] = true;
             }

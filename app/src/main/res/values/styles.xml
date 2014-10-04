@@ -6,7 +6,7 @@
     </style>
 
     <style name="FilterItemCheckedState">
-        <item name="android:background">@color/filter_item_selector</item>
+        <item name="android:background">@drawable/filter_item_selector</item>
     </style>
 
 </resources>

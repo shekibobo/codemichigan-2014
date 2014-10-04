@@ -27,6 +27,8 @@
         android:id="@+id/filter_checked_icon"
         android:layout_width="20dp"
         android:layout_height="20dp"
+        android:duplicateParentState="true"
+        android:background="@drawable/filter_item_selector"
         style="@style/FilterItemCheckedState"
         android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
