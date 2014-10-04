@@ -10,7 +10,7 @@ import lombok.ToString;
  * Created by joshuakovach on 10/4/14.
  */
 @ToString @NoArgsConstructor
-public class StateWaterAttraction {
+public class StateWaterAttraction extends MichiganDataResource {
     @Getter String id; // Not unique!!!!
     @Getter String name;
     @Getter String body;
@@ -33,14 +33,6 @@ public class StateWaterAttraction {
     @SerializedName("laketroutminsize") @Getter String lakeTroutMinSize;
     @SerializedName("rainbowtroutminsize") @Getter String rainbowTroutMinSize;
     @SerializedName("dailypossessionlimit") @Getter String dailyPossessionLimit;
-
-    public static String equalsCondition(String key, String value) {
-        return String.format("%s='%s'", key, value);
-    }
-
-    public static String notEqualsCondition(String key, String value) {
-        return String.format("%s!='%s'", key, value);
-    }
 
     public static String toQuery() {
         return null;

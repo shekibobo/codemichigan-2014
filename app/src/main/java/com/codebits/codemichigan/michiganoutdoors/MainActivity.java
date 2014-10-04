@@ -15,6 +15,7 @@ import android.util.Log;
 
 import com.codebits.codemichigan.michiganoutdoors.data.api.services.MichiganDataService;
 import com.codebits.codemichigan.michiganoutdoors.data.api.services.request_intercepters.MichiganDataRequestIntercepter;
+import com.codebits.codemichigan.michiganoutdoors.data.models.MichiganDataResource;
 import com.codebits.codemichigan.michiganoutdoors.data.models.StateForestCampground;
 import com.codebits.codemichigan.michiganoutdoors.data.models.StateLandAttraction;
 import com.codebits.codemichigan.michiganoutdoors.data.models.StatePark;
@@ -29,6 +30,7 @@ import java.util.List;
 import retrofit.RestAdapter;
 import retrofit.converter.GsonConverter;
 import rx.Observable;
+import rx.android.observables.AndroidObservable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.functions.Func1;
@@ -116,37 +118,58 @@ public class MainActivity extends FragmentActivity
 
         MichiganDataService service = restAdapter.create(MichiganDataService.class);
 
-        service.stateLandAttractionList(StatePark.toQuery() + " OR " + StateForestCampground.toQuery())
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .flatMap(new Func1<List<StateLandAttraction>, Observable<StateLandAttraction>>() {
-                    @Override
-                    public Observable<StateLandAttraction> call(List<StateLandAttraction> stateParks) {
-                        return Observable.from(stateParks);
-                    }
-                })
-                .subscribe(new Action1<StateLandAttraction>() {
-                    @Override
-                    public void call(StateLandAttraction statePark) {
-                        Log.i("State Land Attraction", statePark.toString());
-                    }
-                });
+        Observable<List<StateLandAttraction>> landAttractions =
+                service.stateLandAttractionList(StateLandAttraction.toQuery());
 
-        service.stateWaterAttractionList(StateWaterAttraction.toQuery())
+        Observable<List<StateWaterAttraction>> waterAttractions =
+                service.stateWaterAttractionList(StateWaterAttraction.toQuery());
+
+        AndroidObservable.bindActivity(this, Observable.merge(landAttractions, waterAttractions))
                 .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .flatMap(new Func1<List<StateWaterAttraction>, Observable<StateWaterAttraction>>() {
+                .flatMap(new Func1<List<? extends MichiganDataResource>, Observable<MichiganDataResource>>() {
                     @Override
-                    public Observable<StateWaterAttraction> call(List<StateWaterAttraction> stateWaterAttractions) {
-                        return Observable.from(stateWaterAttractions);
+                    public Observable<MichiganDataResource> call(List<? extends MichiganDataResource> michiganDataResources) {
+                        return Observable.from(michiganDataResources);
                     }
                 })
-                .subscribe(new Action1<StateWaterAttraction>() {
-                    @Override
-                    public void call(StateWaterAttraction stateWaterAttraction) {
-                        Log.i("State Water Attraction", stateWaterAttraction.toString());
-                    }
-                });
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<MichiganDataResource>() {
+                               @Override
+                               public void call(MichiganDataResource michiganDataResource) {
+                                   Log.i("RESOURCE", michiganDataResource.toString());
+                               }
+                           });
+//        service.stateLandAttractionList(StatePark.toQuery() + " OR " + StateForestCampground.toQuery())
+//                .subscribeOn(Schedulers.newThread())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .flatMap(new Func1<List<StateLandAttraction>, Observable<StateLandAttraction>>() {
+//                    @Override
+//                    public Observable<StateLandAttraction> call(List<StateLandAttraction> stateParks) {
+//                        return Observable.from(stateParks);
+//                    }
+//                })
+//                .subscribe(new Action1<StateLandAttraction>() {
+//                    @Override
+//                    public void call(StateLandAttraction statePark) {
+//                        Log.i("State Land Attraction", statePark.toString());
+//                    }
+//                });
+//
+//        service.stateWaterAttractionList(StateWaterAttraction.toQuery())
+//                .subscribeOn(Schedulers.newThread())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .flatMap(new Func1<List<StateWaterAttraction>, Observable<StateWaterAttraction>>() {
+//                    @Override
+//                    public Observable<StateWaterAttraction> call(List<StateWaterAttraction> stateWaterAttractions) {
+//                        return Observable.from(stateWaterAttractions);
+//                    }
+//                })
+//                .subscribe(new Action1<StateWaterAttraction>() {
+//                    @Override
+//                    public void call(StateWaterAttraction stateWaterAttraction) {
+//                        Log.i("State Water Attraction", stateWaterAttraction.toString());
+//                    }
+//                });
     }
 
     @Override

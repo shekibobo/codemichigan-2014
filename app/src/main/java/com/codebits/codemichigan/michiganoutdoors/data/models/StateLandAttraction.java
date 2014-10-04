@@ -12,7 +12,7 @@ import lombok.ToString;
  * Created by joshuakovach on 10/3/14.
  */
 @ToString @NoArgsConstructor
-public class StateLandAttraction {
+public class StateLandAttraction extends MichiganDataResource {
     @Getter long id;
     @Getter String name;
     @Getter String phone;
@@ -46,18 +46,8 @@ public class StateLandAttraction {
 
     @SerializedName("location_1") @Getter Location location;
 
-    public static String equalsCondition(String key, String value) {
-        return String.format("%s='%s'", key, value);
-    }
-
-    public static String notEqualsCondition(String key, String value) {
-        return String.format("%s!='%s'", key, value);
-    }
-
     public static String toQuery() {
-        return equalsCondition("unitdescription", "State Park")
-                + " OR " + equalsCondition("unitdescription", "State Forest Campground")
-                + " OR " + equalsCondition("unitdescription", "Visitor Center");
+        return null;
     }
 }
 
