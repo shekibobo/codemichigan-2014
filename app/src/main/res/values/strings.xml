@@ -9,10 +9,10 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_example">Example action</string>
     <string name="action_settings">Settings</string>
-
     <string name="drawer_open">Filter by Category</string>
     <string name="drawer_close">Swipe to Filter</string>
     <string name="action_bar_filter_text">Filter</string>
+
     <string-array name="filter_array">
         <item>Campgrounds</item>
         <item>Trails</item>
@@ -23,12 +23,12 @@
     </string-array>
 
     <string-array name="filter_icons">
-        <item>@drawable/ic_launcher</item>
-        <item>@drawable/ic_launcher</item>
-        <item>@drawable/ic_launcher</item>
-        <item>@drawable/ic_launcher</item>
-        <item>@drawable/ic_launcher</item>
-        <item>@drawable/ic_launcher</item>
+        <item>@drawable/ic_campground</item>
+        <item>@drawable/ic_trails</item>
+        <item>@drawable/ic_state_parks</item>
+        <item>@drawable/ic_lakes</item>
+        <item>@drawable/ic_streams</item>
+        <item>@drawable/ic_find_me</item>
     </string-array>
 
     <string-array name="attraction_icons">
@@ -41,5 +41,9 @@
     </string-array>
 
     <string name="filter_drawer_header_text">Tap to Filter</string>
+
+    <string name="title_activity_splash_screen">SplashScreen</string>
+    <string name="hello_world">Hello world!</string>
+
 
 </resources>
