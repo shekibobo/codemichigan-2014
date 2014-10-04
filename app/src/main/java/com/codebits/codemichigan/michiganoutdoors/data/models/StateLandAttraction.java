@@ -12,10 +12,16 @@ import lombok.ToString;
  * Created by joshuakovach on 10/3/14.
  */
 @ToString @NoArgsConstructor
-public class StateLandAttraction {
+public class StateLandAttraction extends MichiganDataResource {
     @Getter long id;
+    @Getter String name;
     @Getter String phone;
     @Getter String ttynum;
+
+    @SerializedName("unittype") @Getter String unitType;
+    @SerializedName("unitdescription") @Getter String unitDescription;
+    @Getter String description;
+    @Getter String county;
 
     @Getter boolean cabin;
     @Getter boolean yurt;
@@ -23,41 +29,25 @@ public class StateLandAttraction {
     @Getter boolean modern;
     @Getter boolean semimodern;
     @Getter boolean teepee;
-    @Getter boolean orv;
-    @Getter boolean permitrequired;
-    @Getter boolean walkin;
-    @Getter boolean entrancefee;
     @Getter boolean boat;
     @Getter boolean equestrian;
-    @Getter boolean ada;
     @Getter boolean minicabin;
-    @Getter boolean active;
     @Getter boolean lodge;
+    @Getter boolean walkin;
+    @SerializedName("orv") @Getter boolean offRoadVehicles;
+    @SerializedName("permitrequired") @Getter boolean permitRequired;
+    @SerializedName("entrancefee") @Getter boolean entranceFee;
+    @SerializedName("ada") @Getter boolean accessible;
+    @Getter boolean active;
 
-    @Getter long ocesitefee;
-    @Getter long grouprate;
-    @Getter long totalnumofsites;
-
-    @Getter String description;
-    @Getter String name;
-    @Getter String unittype;
-    @Getter String unitdescription;
-    @Getter String county;
+    @SerializedName("ocesitefee") @Getter long oceSiteFee;
+    @SerializedName("grouprate") @Getter long groupRate;
+    @SerializedName("totalnumofsites") @Getter long totalNumOfSites;
 
     @SerializedName("location_1") @Getter Location location;
 
-    public static String equalsCondition(String key, String value) {
-        return String.format("%s='%s'", key, value);
-    }
-
-    public static String notEqualsCondition(String key, String value) {
-        return String.format("%s!='%s'", key, value);
-    }
-
     public static String toQuery() {
-        return equalsCondition("unitdescription", "State Park")
-                + " OR " + equalsCondition("unitdescription", "State Forest Campground")
-                + " OR " + equalsCondition("unitdescription", "Visitor Center");
+        return null;
     }
 }
 

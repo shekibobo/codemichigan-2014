@@ -13,11 +13,13 @@ import android.view.MenuItem;
 import android.location.Location;
 import android.util.Log;
 
+import com.codebits.codemichigan.michiganoutdoors.data.api.services.MichiganData;
+import com.codebits.codemichigan.michiganoutdoors.data.api.services.MichiganDataGson;
 import com.codebits.codemichigan.michiganoutdoors.data.api.services.MichiganDataService;
-import com.codebits.codemichigan.michiganoutdoors.data.api.services.request_intercepters.MichiganDataRequestIntercepter;
-import com.codebits.codemichigan.michiganoutdoors.data.models.StateForestCampground;
+import com.codebits.codemichigan.michiganoutdoors.data.api.services.MichiganDataRequestIntercepter;
+import com.codebits.codemichigan.michiganoutdoors.data.models.MichiganDataResource;
 import com.codebits.codemichigan.michiganoutdoors.data.models.StateLandAttraction;
-import com.codebits.codemichigan.michiganoutdoors.data.models.StatePark;
+import com.codebits.codemichigan.michiganoutdoors.data.models.StateWaterAttraction;
 import com.codebits.codemichigan.michiganoutdoors.data.type_adapters.BooleanAsIntTypeAdapter;
 import com.codebits.codemichigan.michiganoutdoors.data.type_adapters.LocationTypeAdapter;
 import com.google.gson.Gson;
@@ -28,6 +30,7 @@ import java.util.List;
 import retrofit.RestAdapter;
 import retrofit.converter.GsonConverter;
 import rx.Observable;
+import rx.android.observables.AndroidObservable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.functions.Func1;
@@ -98,39 +101,29 @@ public class MainActivity extends FragmentActivity
                 R.id.filter_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
 
-        BooleanAsIntTypeAdapter booleanAsIntAdapter = new BooleanAsIntTypeAdapter();
-        LocationTypeAdapter locationTypeAdapter = new LocationTypeAdapter();
+        MichiganDataService service = new MichiganData().getDataService();
 
-        Gson gson = new GsonBuilder()
-                .registerTypeAdapter(Boolean.class, booleanAsIntAdapter)
-                .registerTypeAdapter(boolean.class, booleanAsIntAdapter)
-                .registerTypeAdapter(Location.class, locationTypeAdapter)
-                .create();
+        Observable<List<StateLandAttraction>> landAttractions =
+                service.stateLandAttractionList(StateLandAttraction.toQuery(), null);
 
-        RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint("http://data.michigan.gov")
-                .setRequestInterceptor(new MichiganDataRequestIntercepter())
-                .setConverter(new GsonConverter(gson))
-                .build();
+        Observable<List<StateWaterAttraction>> waterAttractions =
+                service.stateWaterAttractionList(StateWaterAttraction.toQuery(), null);
 
-        MichiganDataService service = restAdapter.create(MichiganDataService.class);
-
-        service.stateLandAttractionList(StatePark.toQuery() + " OR " + StateForestCampground.toQuery())
+        AndroidObservable.bindActivity(this, Observable.merge(landAttractions, waterAttractions))
                 .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .flatMap(new Func1<List<StateLandAttraction>, Observable<StateLandAttraction>>() {
+                .flatMap(new Func1<List<? extends MichiganDataResource>, Observable<MichiganDataResource>>() {
                     @Override
-                    public Observable<StateLandAttraction> call(List<StateLandAttraction> stateParks) {
-                        return Observable.from(stateParks);
+                    public Observable<MichiganDataResource> call(List<? extends MichiganDataResource> michiganDataResources) {
+                        return Observable.from(michiganDataResources);
                     }
                 })
-                .subscribe(new Action1<StateLandAttraction>() {
-                    @Override
-                    public void call(StateLandAttraction statePark) {
-                        Log.i("State Land Attraction", statePark.toString());
-                    }
-                });
-
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<MichiganDataResource>() {
+                               @Override
+                               public void call(MichiganDataResource michiganDataResource) {
+                                   Log.i("RESOURCE", michiganDataResource.toString());
+                               }
+                           });
     }
 
     @Override

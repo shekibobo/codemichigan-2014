@@ -1,4 +1,4 @@
-package com.codebits.codemichigan.michiganoutdoors.data.api.services.request_intercepters;
+package com.codebits.codemichigan.michiganoutdoors.data.api.services;
 
 import retrofit.RequestInterceptor;
 
