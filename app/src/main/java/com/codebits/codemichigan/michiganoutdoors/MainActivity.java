@@ -13,12 +13,12 @@ import android.view.MenuItem;
 import android.location.Location;
 import android.util.Log;
 
+import com.codebits.codemichigan.michiganoutdoors.data.api.services.MichiganData;
+import com.codebits.codemichigan.michiganoutdoors.data.api.services.MichiganDataGson;
 import com.codebits.codemichigan.michiganoutdoors.data.api.services.MichiganDataService;
-import com.codebits.codemichigan.michiganoutdoors.data.api.services.request_intercepters.MichiganDataRequestIntercepter;
+import com.codebits.codemichigan.michiganoutdoors.data.api.services.MichiganDataRequestIntercepter;
 import com.codebits.codemichigan.michiganoutdoors.data.models.MichiganDataResource;
-import com.codebits.codemichigan.michiganoutdoors.data.models.StateForestCampground;
 import com.codebits.codemichigan.michiganoutdoors.data.models.StateLandAttraction;
-import com.codebits.codemichigan.michiganoutdoors.data.models.StatePark;
 import com.codebits.codemichigan.michiganoutdoors.data.models.StateWaterAttraction;
 import com.codebits.codemichigan.michiganoutdoors.data.type_adapters.BooleanAsIntTypeAdapter;
 import com.codebits.codemichigan.michiganoutdoors.data.type_adapters.LocationTypeAdapter;
@@ -101,22 +101,7 @@ public class MainActivity extends FragmentActivity
                 R.id.filter_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
 
-        BooleanAsIntTypeAdapter booleanAsIntAdapter = new BooleanAsIntTypeAdapter();
-        LocationTypeAdapter locationTypeAdapter = new LocationTypeAdapter();
-
-        Gson gson = new GsonBuilder()
-                .registerTypeAdapter(Boolean.class, booleanAsIntAdapter)
-                .registerTypeAdapter(boolean.class, booleanAsIntAdapter)
-                .registerTypeAdapter(Location.class, locationTypeAdapter)
-                .create();
-
-        RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint("http://data.michigan.gov")
-                .setRequestInterceptor(new MichiganDataRequestIntercepter())
-                .setConverter(new GsonConverter(gson))
-                .build();
-
-        MichiganDataService service = restAdapter.create(MichiganDataService.class);
+        MichiganDataService service = new MichiganData().getDataService();
 
         Observable<List<StateLandAttraction>> landAttractions =
                 service.stateLandAttractionList(StateLandAttraction.toQuery());
