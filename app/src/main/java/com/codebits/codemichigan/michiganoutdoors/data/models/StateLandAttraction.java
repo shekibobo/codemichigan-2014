@@ -23,25 +23,25 @@ public class StateLandAttraction {
     @Getter boolean modern;
     @Getter boolean semimodern;
     @Getter boolean teepee;
-    @Getter boolean orv;
-    @Getter boolean permitrequired;
-    @Getter boolean walkin;
-    @Getter boolean entrancefee;
     @Getter boolean boat;
     @Getter boolean equestrian;
-    @Getter boolean ada;
     @Getter boolean minicabin;
-    @Getter boolean active;
     @Getter boolean lodge;
+    @Getter boolean walkin;
+    @SerializedName("orv") @Getter boolean offRoadVehicles;
+    @SerializedName("permitrequired") @Getter boolean permitRequired;
+    @SerializedName("entrancefee") @Getter boolean entranceFee;
+    @SerializedName("ada") @Getter boolean accessible;
+    @Getter boolean active;
 
-    @Getter long ocesitefee;
-    @Getter long grouprate;
-    @Getter long totalnumofsites;
+    @SerializedName("ocesitefee") @Getter long oceSiteFee;
+    @SerializedName("grouprate") @Getter long groupRate;
+    @SerializedName("totalnumofsites") @Getter long totalNumOfSites;
 
     @Getter String description;
     @Getter String name;
-    @Getter String unittype;
-    @Getter String unitdescription;
+    @SerializedName("unittype") @Getter String unitType;
+    @SerializedName("unitdescription") @Getter String unitDescription;
     @Getter String county;
 
     @SerializedName("location_1") @Getter Location location;
