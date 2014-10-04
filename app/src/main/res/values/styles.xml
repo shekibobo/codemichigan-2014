@@ -5,8 +5,14 @@
         <!-- Customize your theme here. -->
     </style>
 
+
     <style name="FilterItemCheckedState">
         <item name="android:background">@drawable/filter_item_selector</item>
+    </style>
+    <style name="SplashTheme" parent="@android:style/Theme.Holo.NoActionBar">
+        <item name="android:windowBackground">@color/green</item>
+        <item name="android:background">@color/green</item>
+
     </style>
 
 </resources>
