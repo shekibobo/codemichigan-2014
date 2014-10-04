@@ -14,8 +14,14 @@ import lombok.ToString;
 @ToString @NoArgsConstructor
 public class StateLandAttraction {
     @Getter long id;
+    @Getter String name;
     @Getter String phone;
     @Getter String ttynum;
+
+    @SerializedName("unittype") @Getter String unitType;
+    @SerializedName("unitdescription") @Getter String unitDescription;
+    @Getter String description;
+    @Getter String county;
 
     @Getter boolean cabin;
     @Getter boolean yurt;
@@ -37,12 +43,6 @@ public class StateLandAttraction {
     @SerializedName("ocesitefee") @Getter long oceSiteFee;
     @SerializedName("grouprate") @Getter long groupRate;
     @SerializedName("totalnumofsites") @Getter long totalNumOfSites;
-
-    @Getter String description;
-    @Getter String name;
-    @SerializedName("unittype") @Getter String unitType;
-    @SerializedName("unitdescription") @Getter String unitDescription;
-    @Getter String county;
 
     @SerializedName("location_1") @Getter Location location;
 

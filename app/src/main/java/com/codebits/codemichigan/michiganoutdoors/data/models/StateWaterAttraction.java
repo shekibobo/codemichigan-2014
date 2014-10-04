@@ -12,11 +12,11 @@ import lombok.ToString;
 @ToString @NoArgsConstructor
 public class StateWaterAttraction {
     @Getter String id; // Not unique!!!!
+    @Getter String name;
     @Getter String body;
     @Getter String tackle;
     @Getter String type;
     @Getter String county;
-    @Getter String name;
     @Getter String note;
 
     @SerializedName("laketype") @Getter String openSeason;
