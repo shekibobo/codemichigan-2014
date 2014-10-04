@@ -104,10 +104,10 @@ public class MainActivity extends FragmentActivity
         MichiganDataService service = new MichiganData().getDataService();
 
         Observable<List<StateLandAttraction>> landAttractions =
-                service.stateLandAttractionList(StateLandAttraction.toQuery());
+                service.stateLandAttractionList(StateLandAttraction.toQuery(), null);
 
         Observable<List<StateWaterAttraction>> waterAttractions =
-                service.stateWaterAttractionList(StateWaterAttraction.toQuery());
+                service.stateWaterAttractionList(StateWaterAttraction.toQuery(), null);
 
         AndroidObservable.bindActivity(this, Observable.merge(landAttractions, waterAttractions))
                 .subscribeOn(Schedulers.newThread())
