@@ -14,8 +14,8 @@ public class StateWaterAttraction extends MichiganAttraction {
     @Getter String id; // Not unique!!!!
     @Getter String body;
     @Getter String tackle;
+    @SerializedName("county") String resourceType;
     @Getter String type;
-    @Getter String county;
     @Getter String note;
 
     @SerializedName("laketype") @Getter String openSeason;
@@ -32,11 +32,6 @@ public class StateWaterAttraction extends MichiganAttraction {
     @SerializedName("laketroutminsize") @Getter String lakeTroutMinSize;
     @SerializedName("rainbowtroutminsize") @Getter String rainbowTroutMinSize;
     @SerializedName("dailypossessionlimit") @Getter String dailyPossessionLimit;
-
-
-    public String type() {
-        return county;
-    }
 
     public static String toQuery() {
         return null;

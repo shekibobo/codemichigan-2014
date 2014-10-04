@@ -7,6 +7,7 @@ import lombok.Getter;
  */
 public class MichiganAttraction {
     @Getter String name;
+    @Getter String resourceType;
 
     public static String equalsCondition(String key, String value) {
         return String.format("%s='%s'", key, value);
