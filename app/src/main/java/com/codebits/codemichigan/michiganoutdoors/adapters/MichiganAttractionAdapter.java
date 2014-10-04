@@ -55,7 +55,6 @@ public class MichiganAttractionAdapter extends ArrayAdapter<MichiganAttraction> 
 
         // categorize on the resource type and set icon
         String type = attraction.getResourceType();
-        // TODO: type is null here, data needs to be filtered
         for (int i=0; i < attractionNames.length; i++) {
             if (type.equalsIgnoreCase(attractionNames[i])) {
                 holder.attractionIcon.setImageResource(attractionIcons.getResourceId(i, -1));
