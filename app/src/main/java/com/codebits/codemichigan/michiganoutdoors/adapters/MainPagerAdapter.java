@@ -9,7 +9,9 @@ import com.codebits.codemichigan.michiganoutdoors.fragments.SuperAwesomeCardFrag
 
 public class MainPagerAdapter extends FragmentPagerAdapter {
 
-    private final String[] TITLES = { "ListView", "Map" };
+    public final static int LIST_FRAGMENT_INDEX = 0;
+    public final static int MAP_FRAGMENT_INDEX = 1;
+    public final static String[] TITLES = {"Michigan Places", "Map"};
 
     public MainPagerAdapter(FragmentManager fm) {
         super(fm);
@@ -28,10 +30,12 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         switch (position) {
-            case 1:
+            case MAP_FRAGMENT_INDEX:
                 return MapFragment.getInstance();
+            case LIST_FRAGMENT_INDEX:
             default:
                 return SuperAwesomeCardFragment.newInstance(position);
+
         }
     }
 

@@ -20,22 +20,18 @@ import butterknife.InjectView;
 
 
 public class MainActivity extends FragmentActivity
-    implements MapFragment.OnFragmentInteractionListener, FilterDrawerFragment.NavigationDrawerCallbacks {
+    implements MapFragment.OnFragmentInteractionListener, FilterDrawerFragment.FilterDrawerCallbacks {
 
-    final static int LIST_FRAGMENT_INDEX = 0;
+
 
     private FilterDrawerFragment mFilterDrawerFragment;
     @InjectView(R.id.pager) ViewPager pager;
-    private MainPagerAdapter adapter;
+    private MainPagerAdapter pagerAdapter;
     private ActionBar actionBar;
-    private CharSequence mTitle;
 
     // This needs to stay static for the MapFragment.
     // It's not pretty, but I don't feel like fighting it under our current time constraints.
     public static FragmentManager fragmentManager;
-
-    public MainActivity() {
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,18 +42,34 @@ public class MainActivity extends FragmentActivity
         actionBar = getActionBar();
         fragmentManager = getSupportFragmentManager();
 
-        adapter = new MainPagerAdapter(getSupportFragmentManager());
-        pager.setAdapter(adapter);
+        pagerAdapter = new MainPagerAdapter(getSupportFragmentManager());
+        pager.setAdapter(pagerAdapter);
 
         // This is here to allow drawer swiping from the map view (potentially)
         final int pageMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4, getResources()
                 .getDisplayMetrics());
         pager.setPageMargin(pageMargin);
+        pager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int i, float v, int i2) {
+
+            }
+
+            @Override
+            public void onPageSelected(int i) {
+                restoreActionBar();
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int i) {
+
+            }
+        });
 
         mFilterDrawerFragment = (FilterDrawerFragment)
                 getFragmentManager().findFragmentById(R.id.filter_drawer);
 
-        mTitle = getString(R.string.action_bar_filter_text);
+        actionBar.setTitle(getCurrentTitle());
 
         // Set up the drawer.
         mFilterDrawerFragment.setUp(
@@ -76,13 +88,18 @@ public class MainActivity extends FragmentActivity
         return super.onPrepareOptionsMenu(menu);
     }
 
+
     public void restoreActionBar() {
         ActionBar actionBar = getActionBar();
         if (actionBar != null) {
             actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
             actionBar.setDisplayShowTitleEnabled(true);
-            actionBar.setTitle(mTitle);
+            actionBar.setTitle(getCurrentTitle());
         }
+    }
+
+    private String getCurrentTitle() {
+        return MainPagerAdapter.TITLES[pager.getCurrentItem()];
     }
 
     @Override
@@ -99,7 +116,7 @@ public class MainActivity extends FragmentActivity
     }
 
     @Override
-    public void onNavigationDrawerItemSelected(int position) {
+    public void onFilterDrawerItemSelected(int position) {
         // This is where we would filter the list items
         // or pin locations.
 
@@ -118,6 +135,7 @@ public class MainActivity extends FragmentActivity
 
     @Override
     public void listNavigationButtonClicked() {
-        pager.setCurrentItem(LIST_FRAGMENT_INDEX);
+        pager.setCurrentItem(MainPagerAdapter.LIST_FRAGMENT_INDEX);
+        actionBar.setTitle(getCurrentTitle());
     }
 }
