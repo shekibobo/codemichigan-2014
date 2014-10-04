@@ -32,7 +32,6 @@ public class FilterDrawerAdapter extends ArrayAdapter<String> {
         nameArray = context.getResources().getStringArray(R.array.filter_array);
         icons = context.getResources().obtainTypedArray(R.array.filter_icons);
 
-
     }
 
     @Override

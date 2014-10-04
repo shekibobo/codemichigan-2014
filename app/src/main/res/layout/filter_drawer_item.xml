@@ -7,7 +7,6 @@
     <ImageView
         android:layout_width="30dp"
         android:layout_height="30dp"
-
         android:id="@+id/filter_icon"
         android:layout_centerVertical="true"
         android:layout_alignParentLeft="true"
@@ -24,8 +23,8 @@
         android:layout_centerVertical="true"
         android:layout_toRightOf="@+id/filter_icon" />
 
-   <!-- <ImageView
-           android:background="#F73738"
+    <ImageView
+        android:id="@+id/filter_checked_icon"
         android:layout_width="20dp"
         android:layout_height="20dp"
         style="@style/FilterItemCheckedState"
@@ -33,6 +32,6 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_marginRight="40dp"
-        android:layout_marginEnd="40dp" /> -->
+        android:layout_marginEnd="40dp" />
 
 </RelativeLayout>
