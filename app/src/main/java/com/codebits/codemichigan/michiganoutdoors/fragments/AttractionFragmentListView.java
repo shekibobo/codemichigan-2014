@@ -3,7 +3,6 @@ package com.codebits.codemichigan.michiganoutdoors.fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,14 +33,9 @@ public class AttractionFragmentListView extends Fragment {
 
         // Temporary
         ArrayList<MichiganAttraction> li = new ArrayList<>();
-        MichiganAttraction t = new MichiganAttraction();
-        t.setName("PARKKK");
-        t.setResourceType("Lake");
-        li.add(t);
 
         attractionAdapter = new MichiganAttractionAdapter(getActivity().getApplicationContext(),
                 R.layout.michigan_attraction_list_item, li);
-        Log.wtf("Adapter", "Made adapter");
 
         mListView.setAdapter(attractionAdapter);
 

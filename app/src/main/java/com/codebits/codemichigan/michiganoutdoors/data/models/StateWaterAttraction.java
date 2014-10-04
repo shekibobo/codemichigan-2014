@@ -14,7 +14,7 @@ public class StateWaterAttraction extends MichiganAttraction {
     @Getter String id; // Not unique!!!!
     @Getter String body;
     @Getter String tackle;
-    @SerializedName("county") String resourceType;
+    @SerializedName("county") @Getter String resourceType;
     @Getter String type;
     @Getter String note;
 
