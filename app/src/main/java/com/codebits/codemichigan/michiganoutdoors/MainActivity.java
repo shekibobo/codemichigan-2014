@@ -104,9 +104,12 @@ public class MainActivity extends FragmentActivity
 
     private void updateDataSet(List<? extends MichiganAttraction> s) {
         resourceArray.addAll(s);
-        Log.i("All the stuff", resourceArray.toString());
+        //Log.i("All the stuff", resourceArray.toString());
+//        pagerAdapter.getAttractionFragmentListView().getAdapter().addAll(resourceArray);
+//        pagerAdapter.getAttractionFragmentListView().getAdapter().notifyDataSetChanged();
         // TODO: Update the active adapters
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -118,7 +121,6 @@ public class MainActivity extends FragmentActivity
     public boolean onPrepareOptionsMenu(Menu menu) {
         return super.onPrepareOptionsMenu(menu);
     }
-
 
     public void restoreActionBar() {
         ActionBar actionBar = getActionBar();
