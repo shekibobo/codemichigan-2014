@@ -2,10 +2,14 @@
     android:id="@+id/header_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:gravity="center_horizontal"
+    android:height="55dp"
+    android:gravity="center"
     android:layout_marginTop="10dp"
     android:layout_marginBottom="20dp"
     android:text="@string/filter_drawer_header_text"
-    android:textSize="24sp" >
+    android:textSize="18sp"
+    android:textColor="@color/blue"
+    android:fontFamily="sans-serif"
+    android:textStyle="bold">
 
 </TextView>

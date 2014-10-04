@@ -2,11 +2,11 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="60dp" >
+    android:layout_height="55dp" >
 
     <ImageView
-        android:layout_width="25dp"
-        android:layout_height="25dp"
+        android:layout_width="22dp"
+        android:layout_height="22dp"
         android:id="@+id/filter_icon"
         android:layout_centerVertical="true"
         android:layout_alignParentLeft="true"
@@ -21,7 +21,10 @@
         android:id="@+id/filter_name"
         android:layout_toEndOf="@+id/filter_icon"
         android:layout_centerVertical="true"
-        android:layout_toRightOf="@+id/filter_icon" />
+        android:layout_toRightOf="@+id/filter_icon"
+        android:textColor="@color/green"
+        android:fontFamily="sans-serif"
+        android:textSize="18sp"/>
 
     <ImageView
         android:id="@+id/filter_checked_icon"
