@@ -3,6 +3,7 @@ package com.codebits.codemichigan.michiganoutdoors.data.api.services;
 import com.codebits.codemichigan.michiganoutdoors.data.models.StateForestCampground;
 import com.codebits.codemichigan.michiganoutdoors.data.models.StateLandAttraction;
 import com.codebits.codemichigan.michiganoutdoors.data.models.StatePark;
+import com.codebits.codemichigan.michiganoutdoors.data.models.StateWaterAttraction;
 import com.codebits.codemichigan.michiganoutdoors.data.models.VisitorCenter;
 
 import java.util.List;
@@ -26,4 +27,7 @@ public interface MichiganDataService {
 
     @GET("/resource/w9tw-628x?$where=unitdescription='Visitor%20Center'")
     Observable<List<VisitorCenter>> visitorCenterList();
+
+    @GET("/resource/3qit-aik4")
+    Observable<List<StateWaterAttraction>> stateWaterAttractionList(@Query("$where") String attractionType);
 }

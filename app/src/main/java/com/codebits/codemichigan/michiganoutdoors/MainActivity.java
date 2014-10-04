@@ -18,6 +18,7 @@ import com.codebits.codemichigan.michiganoutdoors.data.api.services.request_inte
 import com.codebits.codemichigan.michiganoutdoors.data.models.StateForestCampground;
 import com.codebits.codemichigan.michiganoutdoors.data.models.StateLandAttraction;
 import com.codebits.codemichigan.michiganoutdoors.data.models.StatePark;
+import com.codebits.codemichigan.michiganoutdoors.data.models.StateWaterAttraction;
 import com.codebits.codemichigan.michiganoutdoors.data.type_adapters.BooleanAsIntTypeAdapter;
 import com.codebits.codemichigan.michiganoutdoors.data.type_adapters.LocationTypeAdapter;
 import com.google.gson.Gson;
@@ -131,6 +132,21 @@ public class MainActivity extends FragmentActivity
                     }
                 });
 
+        service.stateWaterAttractionList(StateWaterAttraction.toQuery())
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .flatMap(new Func1<List<StateWaterAttraction>, Observable<StateWaterAttraction>>() {
+                    @Override
+                    public Observable<StateWaterAttraction> call(List<StateWaterAttraction> stateWaterAttractions) {
+                        return Observable.from(stateWaterAttractions);
+                    }
+                })
+                .subscribe(new Action1<StateWaterAttraction>() {
+                    @Override
+                    public void call(StateWaterAttraction stateWaterAttraction) {
+                        Log.i("State Water Attraction", stateWaterAttraction.toString());
+                    }
+                });
     }
 
     @Override
