@@ -16,7 +16,7 @@ import rx.Observable;
  * Created by joshuakovach on 10/3/14.
  */
 public interface MichiganDataService {
-    @GET("/resource/w9tw-628x")
+    @GET("/resource/w9tw-628x?$order=name%20ASC")
     Observable<List<StateLandAttraction>> stateLandAttractionList(
             @Query("$where") String attractionType,
             @Query("$q") String searchString);
@@ -30,7 +30,7 @@ public interface MichiganDataService {
     @GET("/resource/w9tw-628x?$where=unitdescription='Visitor%20Center'")
     Observable<List<VisitorCenter>> visitorCenterList();
 
-    @GET("/resource/3qit-aik4")
+    @GET("/resource/3qit-aik4?$order=name%20ASC")
     Observable<List<StateWaterAttraction>> stateWaterAttractionList(
             @Query("$where") String attractionType,
             @Query("$q") String searchString);
