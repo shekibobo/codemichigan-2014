@@ -11,6 +11,8 @@ import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageButton;
 
 import com.codebits.codemichigan.michiganoutdoors.data.api.services.MichiganData;
 import com.codebits.codemichigan.michiganoutdoors.data.api.services.MichiganDataService;
@@ -25,6 +27,7 @@ import com.codebits.codemichigan.michiganoutdoors.data.models.StateWaterAttracti
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.OnClick;
 import rx.Observable;
 import rx.android.observables.AndroidObservable;
 import rx.android.schedulers.AndroidSchedulers;
@@ -34,27 +37,23 @@ import com.codebits.codemichigan.michiganoutdoors.adapters.MainPagerAdapter;
 import com.codebits.codemichigan.michiganoutdoors.data.models.StreamAttraction;
 import com.codebits.codemichigan.michiganoutdoors.data.models.VisitorCenter;
 import com.codebits.codemichigan.michiganoutdoors.fragments.FilterDrawerFragment;
-import com.codebits.codemichigan.michiganoutdoors.fragments.MapFragment;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 
 public class MainActivity extends FragmentActivity
-    implements MapFragment.OnFragmentInteractionListener, FilterDrawerFragment.FilterDrawerCallbacks {
-
-
+    implements FilterDrawerFragment.FilterDrawerCallbacks {
 
     ArrayList<MichiganAttraction> resourceArray;
     private FilterDrawerFragment mFilterDrawerFragment;
     @InjectView(R.id.pager) ViewPager pager;
+    @InjectView(R.id.return_to_list_button) ImageButton returnToListViewButton;
     private MainPagerAdapter pagerAdapter;
     private ActionBar actionBar;
     MichiganDataService dataService;
 
-    // This needs to stay static for the MapFragment.
-    // It's not pretty, but I don't feel like fighting it under our current time constraints.
-    public static FragmentManager fragmentManager;
+    private FragmentManager fragmentManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +78,7 @@ public class MainActivity extends FragmentActivity
             @Override
             public void onPageSelected(int i) {
                 restoreActionBar();
+                toggleReturnToListViewButton(i);
             }
 
             @Override
@@ -89,6 +89,7 @@ public class MainActivity extends FragmentActivity
                 getFragmentManager().findFragmentById(R.id.filter_drawer);
 
         actionBar.setTitle(getCurrentTitle());
+        toggleReturnToListViewButton(pager.getCurrentItem());
 
         dataService = new MichiganData().getDataService();
         resourceArray = new ArrayList<>();
@@ -207,9 +208,14 @@ public class MainActivity extends FragmentActivity
         super.onRestoreInstanceState(savedInstanceState);
     }
 
-    @Override
-    public void listNavigationButtonClicked() {
+    @OnClick(R.id.return_to_list_button)
+    void returnToListView(View button) {
         pager.setCurrentItem(MainPagerAdapter.LIST_FRAGMENT_INDEX);
-        actionBar.setTitle(getCurrentTitle());
+    }
+
+    private void toggleReturnToListViewButton(int index) {
+        returnToListViewButton.setVisibility(
+                MainPagerAdapter.LIST_FRAGMENT_INDEX == index ? View.GONE : View.VISIBLE
+        );
     }
 }

@@ -19,6 +19,17 @@
             android:layout_height="wrap_content"
             tools:context=".MainActivity" />
 
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/return_to_list_button"
+            android:src="@drawable/ic_launcher"
+            android:focusableInTouchMode="false"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+
     </RelativeLayout>
 
     <fragment android:id="@+id/filter_drawer"
