@@ -111,19 +111,9 @@ public class MainActivity extends FragmentActivity
 
         AndroidObservable.bindActivity(this, Observable.merge(landAttractions, waterAttractions))
                 .subscribeOn(Schedulers.newThread())
-                .flatMap(new Func1<List<? extends MichiganDataResource>, Observable<MichiganDataResource>>() {
-                    @Override
-                    public Observable<MichiganDataResource> call(List<? extends MichiganDataResource> michiganDataResources) {
-                        return Observable.from(michiganDataResources);
-                    }
-                })
+                .flatMap(s -> Observable.from(s))
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<MichiganDataResource>() {
-                               @Override
-                               public void call(MichiganDataResource michiganDataResource) {
-                                   Log.i("RESOURCE", michiganDataResource.toString());
-                               }
-                           });
+                .subscribe(s -> Log.i("RESOURCE", s.toString()));
     }
 
     @Override

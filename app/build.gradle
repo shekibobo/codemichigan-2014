@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'retrolambda'
 
 android {
     signingConfigs {
@@ -31,6 +32,11 @@ android {
         debug {
             signingConfig signingConfigs.debug
         }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 
