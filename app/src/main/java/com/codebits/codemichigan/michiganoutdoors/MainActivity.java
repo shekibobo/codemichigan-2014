@@ -1,6 +1,7 @@
 package com.codebits.codemichigan.michiganoutdoors;
 
 import android.app.ActionBar;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -25,6 +26,7 @@ import com.codebits.codemichigan.michiganoutdoors.data.models.StateParkTrail;
 import com.codebits.codemichigan.michiganoutdoors.data.models.StateWaterAttraction;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import butterknife.OnClick;
@@ -37,6 +39,12 @@ import com.codebits.codemichigan.michiganoutdoors.adapters.MainPagerAdapter;
 import com.codebits.codemichigan.michiganoutdoors.data.models.StreamAttraction;
 import com.codebits.codemichigan.michiganoutdoors.data.models.VisitorCenter;
 import com.codebits.codemichigan.michiganoutdoors.fragments.FilterDrawerFragment;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -45,7 +53,7 @@ import butterknife.InjectView;
 public class MainActivity extends FragmentActivity
     implements FilterDrawerFragment.FilterDrawerCallbacks {
 
-    ArrayList<MichiganAttraction> resourceArray;
+    ArrayList<MichiganAttraction> resourceArray = new ArrayList<>();
     private FilterDrawerFragment mFilterDrawerFragment;
     @InjectView(R.id.pager) ViewPager pager;
     @InjectView(R.id.return_to_list_button) ImageButton returnToListViewButton;
@@ -54,6 +62,7 @@ public class MainActivity extends FragmentActivity
     MichiganDataService dataService;
 
     private FragmentManager fragmentManager;
+    private GoogleMap mMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +88,12 @@ public class MainActivity extends FragmentActivity
             public void onPageSelected(int i) {
                 restoreActionBar();
                 toggleReturnToListViewButton(i);
+
+                SupportMapFragment mapFragment = pagerAdapter.getMapFragment();
+
+                if (i == MainPagerAdapter.MAP_FRAGMENT_INDEX) {
+                    setupMapIfNeeded();
+                }
             }
 
             @Override
@@ -153,6 +168,42 @@ public class MainActivity extends FragmentActivity
         pagerAdapter.getAttractionFragmentListView().getAdapter().clear();
         pagerAdapter.getAttractionFragmentListView().getAdapter().addAll(resourceArray);
         pagerAdapter.getAttractionFragmentListView().getAdapter().notifyDataSetChanged();
+
+        SupportMapFragment mapFragment = pagerAdapter.getMapFragment();
+        setupMapIfNeeded();
+    }
+
+    private void setupMapIfNeeded() {
+        // Do a null check to confirm that we have not already instantiated the map.
+        if (mMap == null) {
+            // Try to obtain the map from the SupportMapFragment.
+            mMap = pagerAdapter.getMapFragment().getMap();
+            // Check if we were successful in obtaining the map.
+            if (mMap != null) {
+                setupMap();
+            }
+        }
+    }
+
+    private void setupMap() {
+        Log.wtf("setupMap", mMap.toString());
+        mMap.clear();
+        Observable.from(resourceArray)
+                .subscribeOn(Schedulers.newThread())
+                .doOnEach(s -> Log.i("Found a thing!", s.toString()))
+                .filter(s -> Arrays.asList("State Park", "State Forest Campground", "Visitor Center")
+                        .contains(s.getResourceType()))
+                .doOnEach(s -> Log.i("Found a land thing!", s.toString()))
+                .map(s -> (StateLandAttraction) s)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(s -> mMap.addMarker(
+                        new MarkerOptions()
+                                .position(new LatLng(
+                                        s.getLocation().getLatitude(),
+                                        s.getLocation().getLongitude()))
+                                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
+                                .title(s.getName())
+                                .alpha(0.7f)));
     }
 
 
