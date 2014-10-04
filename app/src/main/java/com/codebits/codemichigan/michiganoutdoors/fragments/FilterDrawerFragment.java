@@ -18,11 +18,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.codebits.codemichigan.michiganoutdoors.R;
+import com.codebits.codemichigan.michiganoutdoors.adapters.FilterDrawerAdapter;
 
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.
@@ -52,6 +52,7 @@ public class FilterDrawerFragment extends Fragment {
      */
     private ActionBarDrawerToggle mDrawerToggle;
 
+    private TextView headerView;
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerListView;
     private View mFragmentContainerView;
@@ -92,6 +93,7 @@ public class FilterDrawerFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         mDrawerListView = (ListView) inflater.inflate(
                 R.layout.fragment_filter_drawer, container, false);
         mDrawerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -100,19 +102,20 @@ public class FilterDrawerFragment extends Fragment {
                 selectItem(position);
             }
         });
-        mDrawerListView.setAdapter(new ArrayAdapter<String>(
-                getActionBar().getThemedContext(),
-                android.R.layout.simple_list_item_activated_1,
-                android.R.id.text1,
-                new String[]{
-                        getString(R.string.title_section1),
-                        getString(R.string.title_section2),
-                        getString(R.string.title_section3),
-                }));
-        filterItemsCheckStatus  = new boolean[mDrawerListView.getCount()];
-        for (boolean item : filterItemsCheckStatus)
-            item = false;
 
+        headerView = (TextView) inflater.inflate(R.layout.filter_drawer_header, container, false);
+        mDrawerListView.addHeaderView(headerView);
+
+        FilterDrawerAdapter drawerAdapter = new FilterDrawerAdapter(getActivity().getApplicationContext(),
+                R.id.filter_name);
+
+        mDrawerListView.setAdapter(drawerAdapter);
+
+        // Initialize boolean array to track checked items
+        filterItemsCheckStatus  = new boolean[mDrawerListView.getCount()];
+        for (int i=0; i < filterItemsCheckStatus.length; i++) {
+            filterItemsCheckStatus[i] = false;
+        }
 
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
         filterItemsCheckStatus[mCurrentSelectedPosition] = true;
@@ -201,9 +204,11 @@ public class FilterDrawerFragment extends Fragment {
         mCurrentSelectedPosition = position;
         if (mDrawerListView != null) {
             if (filterItemsCheckStatus[position]) {
+                // Set listView item and tracking array item
                 mDrawerListView.setItemChecked(position, false);
                 filterItemsCheckStatus[position] = false;
             } else {
+                // Set lisView item and tracking array item
                 mDrawerListView.setItemChecked(position, true);
                 filterItemsCheckStatus[position] = true;
             }
