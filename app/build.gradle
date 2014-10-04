@@ -2,7 +2,11 @@ apply plugin: 'com.android.application'
 
 android {
     signingConfigs {
-        config {
+        debug {
+            storeFile file("debug.keystore")
+        }
+
+        release {
             keyAlias 'CodeMichigan'
             keyPassword 'jellyfish'
             storeFile file('keystores/CodeMichigan.jks')
@@ -20,8 +24,12 @@ android {
     }
     buildTypes {
         release {
-            runProguard false
+            signingConfig signingConfigs.debug
+            runProguard true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            signingConfig signingConfigs.debug
         }
     }
 }
