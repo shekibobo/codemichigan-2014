@@ -51,9 +51,7 @@ public class MainActivity extends FragmentActivity
         pager.setPageMargin(pageMargin);
         pager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
-            public void onPageScrolled(int i, float v, int i2) {
-
-            }
+            public void onPageScrolled(int i, float v, int i2) { }
 
             @Override
             public void onPageSelected(int i) {
@@ -61,9 +59,7 @@ public class MainActivity extends FragmentActivity
             }
 
             @Override
-            public void onPageScrollStateChanged(int i) {
-
-            }
+            public void onPageScrollStateChanged(int i) { }
         });
 
         mFilterDrawerFragment = (FilterDrawerFragment)
@@ -117,9 +113,8 @@ public class MainActivity extends FragmentActivity
 
     @Override
     public void onFilterDrawerItemSelected(int position) {
-        // This is where we would filter the list items
-        // or pin locations.
-
+        // Loop through all drawer items and filter
+        // the ones that are selected.
     }
 
     @Override
@@ -131,7 +126,6 @@ public class MainActivity extends FragmentActivity
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
     }
-
 
     @Override
     public void listNavigationButtonClicked() {

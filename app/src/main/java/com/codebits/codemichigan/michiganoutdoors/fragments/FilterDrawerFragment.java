@@ -23,6 +23,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.codebits.codemichigan.michiganoutdoors.R;
+import com.codebits.codemichigan.michiganoutdoors.adapters.FilterDrawerAdapter;
 
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.
@@ -92,6 +93,7 @@ public class FilterDrawerFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         mDrawerListView = (ListView) inflater.inflate(
                 R.layout.fragment_filter_drawer, container, false);
         mDrawerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -100,18 +102,15 @@ public class FilterDrawerFragment extends Fragment {
                 selectItem(position);
             }
         });
-        mDrawerListView.setAdapter(new ArrayAdapter<String>(
-                getActionBar().getThemedContext(),
-                android.R.layout.simple_list_item_activated_1,
-                android.R.id.text1,
-                new String[]{
-                        getString(R.string.title_section1),
-                        getString(R.string.title_section2),
-                        getString(R.string.title_section3),
-                }));
+
+        FilterDrawerAdapter drawerAdapter = new FilterDrawerAdapter(getActivity().getApplicationContext(),
+                R.id.filter_name);
+
+        mDrawerListView.setAdapter(drawerAdapter);
         filterItemsCheckStatus  = new boolean[mDrawerListView.getCount()];
-        for (boolean item : filterItemsCheckStatus)
-            item = false;
+        for (int i=0; i < filterItemsCheckStatus.length; i++) {
+            filterItemsCheckStatus[i] = false;
+        }
 
 
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
