@@ -12,12 +12,6 @@
 
     <string name="drawer_open">Filter by Category</string>
     <string name="drawer_close">Swipe to Filter</string>
-
-    <string-array name="categories_array">
-        <item>Campgrounds</item>
-        <item>Filter Items</item>
-        <item>Foo Foo</item>
-        <item>Find Me</item>
-    </string-array>
+    <string name="action_bar_filter_text">Filter</string>
 
 </resources>

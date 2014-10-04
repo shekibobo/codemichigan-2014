@@ -2,9 +2,7 @@ package com.codebits.codemichigan.michiganoutdoors;
 
 
 import android.app.ActionBar;
-import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
@@ -12,34 +10,28 @@ import android.support.v4.widget.DrawerLayout;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 
-import com.codebits.codemichigan.michiganoutdoors.adapters.DrawerItemsAdapter;
 import com.codebits.codemichigan.michiganoutdoors.adapters.MainPagerAdapter;
-import com.codebits.codemichigan.michiganoutdoors.models.DrawerItem;
+import com.codebits.codemichigan.michiganoutdoors.fragments.FilterDrawerFragment;
+import com.codebits.codemichigan.michiganoutdoors.fragments.MapFragment;
 
-import java.util.ArrayList;
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 
 
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends FragmentActivity
+    implements MapFragment.OnFragmentInteractionListener, FilterDrawerFragment.NavigationDrawerCallbacks {
 
-    public static ViewPager pager;
+    final static int LIST_FRAGMENT_INDEX = 0;
+
+    private FilterDrawerFragment mFilterDrawerFragment;
+    @InjectView(R.id.pager) ViewPager pager;
     private MainPagerAdapter adapter;
-
     private ActionBar actionBar;
-
-    private String[] mCategoryItems;
-    private DrawerLayout mDrawerLayout;
-    private ListView mDrawerList;
-    private ActionBarDrawerToggle mDrawerToggle;
-    private CharSequence mDrawerTitle;
     private CharSequence mTitle;
 
-
-
+    // This needs to stay static for the MapFragment.
+    // It's not pretty, but I don't feel like fighting it under our current time constraints.
     public static FragmentManager fragmentManager;
 
     public MainActivity() {
@@ -49,146 +41,69 @@ public class MainActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.inject(this);
 
         actionBar = getActionBar();
-
         fragmentManager = getSupportFragmentManager();
 
-        pager = (ViewPager) findViewById(R.id.pager);
         adapter = new MainPagerAdapter(getSupportFragmentManager());
-
         pager.setAdapter(adapter);
 
+        // This is here to allow drawer swiping from the map view (potentially)
         final int pageMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4, getResources()
                 .getDisplayMetrics());
         pager.setPageMargin(pageMargin);
 
+        mFilterDrawerFragment = (FilterDrawerFragment)
+                getFragmentManager().findFragmentById(R.id.filter_drawer);
 
-        /**********************************************
-         * Populate menu items
-         */
+        mTitle = getString(R.string.action_bar_filter_text);
 
-        // Get category items and set the to the drawerList
-        mCategoryItems = getResources().getStringArray(R.array.categories_array);
-        ArrayList<DrawerItem> drawerItemArrayList = new ArrayList<DrawerItem>();
-
-        DrawerItemsAdapter adapter = new DrawerItemsAdapter(this, drawerItemArrayList);
-
-        fillArrayList(drawerItemArrayList);
-
-        mDrawerList = (ListView) findViewById(R.id.left_drawer);
-        // Set the adapter for the list view
-        mDrawerList.setAdapter(adapter);
-
-        // Set the list's click listener
-        mDrawerList.setOnItemClickListener(new DrawerItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView parent, View view, int position, long id) {
-                // Logic for when a DrawerItem is clicked
-                super.onItemClick(parent, view, position, id);
-            }
-        });
-
-        mTitle = mDrawerTitle = getTitle();
-
-
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mDrawerToggle = new ActionBarDrawerToggle(
-                this,                  /* host Activity */
-                mDrawerLayout,         /* DrawerLayout object */
-                R.drawable.ic_drawer,  /* nav drawer icon to replace 'Up' caret */
-                R.string.drawer_open,  /* "open drawer" description */
-                R.string.drawer_close  /* "close drawer" description */
-        ) {
-
-            /** Called when a drawer has settled in a completely closed state. */
-            public void onDrawerClosed(View view) {
-                super.onDrawerClosed(view);
-                actionBar.setTitle(mTitle);
-            }
-
-            /** Called when a drawer has settled in a completely open state. */
-            public void onDrawerOpened(View drawerView) {
-                super.onDrawerOpened(drawerView);
-                actionBar.setTitle(mDrawerTitle);
-            }
-        };
-
-        // Set the drawer toggle as the DrawerListener
-        mDrawerLayout.setDrawerListener(mDrawerToggle);
-
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setHomeButtonEnabled(true);
-    }
-
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        // Sync the toggle state after onRestoreInstanceState has occurred.
-        mDrawerToggle.syncState();
-    }
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        mDrawerToggle.onConfigurationChanged(newConfig);
+        // Set up the drawer.
+        mFilterDrawerFragment.setUp(
+                R.id.filter_drawer,
+                (DrawerLayout) findViewById(R.id.drawer_layout));
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Pass the event to ActionBarDrawerToggle, if it returns
-        // true, then it has handled the app icon touch event
-        if (mDrawerToggle.onOptionsItemSelected(item)) {
-            return true;
-        }
-
-        switch (item.getItemId()) {
-            case 0:
-                break;
-        }
-
         return super.onOptionsItemSelected(item);
     }
 
     /* Called whenever we call invalidateOptionsMenu() */
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        // If the nav drawer is open, hide action items related to the content view
-//        boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
-//        menu.findItem(R.id.action_websearch).setVisible(!drawerOpen);
         return super.onPrepareOptionsMenu(menu);
     }
 
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
-
-    private class DrawerItemClickListener implements ListView.OnItemClickListener {
-        @Override
-        public void onItemClick(AdapterView parent, View view, int position, long id) {
-            selectItem(position);
+    public void restoreActionBar() {
+        ActionBar actionBar = getActionBar();
+        if (actionBar != null) {
+            actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+            actionBar.setDisplayShowTitleEnabled(true);
+            actionBar.setTitle(mTitle);
         }
     }
 
-    /** Swaps fragments in the main content view */
-    private void selectItem(int position) {
-        // Highlight the selected item, update the title, and close the drawer
-        mDrawerList.setItemChecked(position, true);
-        setTitle(mCategoryItems[position]);
-        mDrawerLayout.closeDrawer(mDrawerList);
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        if (!mFilterDrawerFragment.isDrawerOpen()) {
+            // Only show items in the action bar relevant to this screen
+            // if the drawer is not showing. Otherwise, let the drawer
+            // decide what to show in the action bar
+            getMenuInflater().inflate(R.menu.main, menu);
+            restoreActionBar();
+            return true;
+        }
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
-    public void setTitle(CharSequence title) {
-        mTitle = title;
-        actionBar.setTitle(mTitle);
-    }
+    public void onNavigationDrawerItemSelected(int position) {
+        // This is where we would filter the list items
+        // or pin locations.
 
+    }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -200,17 +115,9 @@ public class MainActivity extends FragmentActivity {
         super.onRestoreInstanceState(savedInstanceState);
     }
 
-/******************************************************************
- *            Dummy data fillers
- */
 
-    private void fillArrayList(ArrayList<DrawerItem> list) {
-        list.add(new DrawerItem("Campgrounds"));
-        list.add(new DrawerItem("Restaurants"));
-        list.add(new DrawerItem("Rivers"));
-        list.add(new DrawerItem("Find Me"));
-
+    @Override
+    public void listNavigationButtonClicked() {
+        pager.setCurrentItem(LIST_FRAGMENT_INDEX);
     }
-
-
 }

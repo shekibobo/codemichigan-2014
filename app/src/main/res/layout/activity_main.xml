@@ -21,14 +21,12 @@
 
     </RelativeLayout>
 
-    <ListView android:id="@+id/left_drawer"
-        android:layout_width="180dp"
+    <fragment android:id="@+id/filter_drawer"
+        android:layout_width="@dimen/filter_drawer_width"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:choiceMode="singleChoice"
-        android:divider="@android:color/background_dark"
-        android:dividerHeight="0dp"
-        android:background="#ffffebe6"/>
+        android:name="com.codebits.codemichigan.michiganoutdoors.fragments.FilterDrawerFragment"
+        tools:layout="@layout/fragment_filter_drawer" />
 
 
 </android.support.v4.widget.DrawerLayout>

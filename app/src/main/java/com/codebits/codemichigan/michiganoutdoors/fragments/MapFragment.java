@@ -1,5 +1,6 @@
 package com.codebits.codemichigan.michiganoutdoors.fragments;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -26,6 +27,7 @@ public class MapFragment extends Fragment {
      * available.
      */
     private static MapFragment mapFragment;
+    private OnFragmentInteractionListener mListener;
 
     public static MapFragment getInstance() {
         if (mapFragment == null) {
@@ -44,13 +46,14 @@ public class MapFragment extends Fragment {
         if (container == null) {
             return null;
         }
-        view = (RelativeLayout) inflater.inflate(R.layout.fragment_map, container, false);
+        view = inflater.inflate(R.layout.fragment_map, container, false);
         mapButton = (Button) view.findViewById(R.id.map_button);
         mapButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                MainActivity.pager.setCurrentItem(0);
+                if (mListener != null) {
+                    mListener.listNavigationButtonClicked();
+                }
             }
         });
         // Passing harcoded values for latitude & longitude. Please change as per your need. This is just used to drop a Marker on the Map
@@ -93,6 +96,23 @@ public class MapFragment extends Fragment {
     }
 
     @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        try {
+            mListener = (OnFragmentInteractionListener) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString()
+            + "mustimplement OnFragmentInteractionListener");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        mListener = null;
+        super.onDetach();
+    }
+
+    @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         // TODO Auto-generated method stub
         if (mMap != null)
@@ -120,5 +140,9 @@ public class MapFragment extends Fragment {
                     .remove(MainActivity.fragmentManager.findFragmentById(R.id.location_map)).commit();
             mMap = null;
         }
+    }
+
+    public interface OnFragmentInteractionListener {
+        public void listNavigationButtonClicked();
     }
 }
