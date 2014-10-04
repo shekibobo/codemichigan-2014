@@ -15,9 +15,12 @@ Built in Android Studio. Requires the following for setup:
 3. Write your feature.
 4. Submit a pull request to the master branch.
 5. Update your local master:
-    $ git checkout master
-    $ git fetch upstream
-    $ git merge upstream/master
+
+```bash
+$ git checkout master
+$ git fetch upstream
+$ git merge upstream/master
+```
 
 ## Contributors
 
