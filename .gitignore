@@ -34,3 +34,5 @@ Thumbs.db
 /local.properties
 /.idea/workspace.xml
 /.idea/libraries
+
+app/keystores/
