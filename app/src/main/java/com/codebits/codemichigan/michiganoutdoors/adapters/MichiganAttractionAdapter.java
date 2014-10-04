@@ -26,11 +26,11 @@ public class MichiganAttractionAdapter extends ArrayAdapter<MichiganAttraction> 
     TypedArray attractionIcons;
     final String[] attractionNames = {
             "State Forest Campground",
-            "State Park",
             "State Park Trail",
-            "Visitor Center",
+            "State Park",
+            "Lake",
             "Stream",
-            "Lake"
+            "Visitor Center"
     };
 
     public MichiganAttractionAdapter(Context context, int resourceId, ArrayList<MichiganAttraction> dataList) {
@@ -57,7 +57,7 @@ public class MichiganAttractionAdapter extends ArrayAdapter<MichiganAttraction> 
         String type = attraction.getResourceType();
         for (int i=0; i < attractionNames.length; i++) {
             if (type.equalsIgnoreCase(attractionNames[i])) {
-                holder.attractionIcon.setImageResource(attractionIcons.getResourceId(i, -1));
+                holder.attractionIcon.setImageResource(attractionIcons.getResourceId(i - 1, -1));
             }
         }
         if (holder.attractionIcon.getDrawable() == null) {
