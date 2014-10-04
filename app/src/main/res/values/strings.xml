@@ -19,6 +19,7 @@
         <item>State Parks</item>
         <item>Lakes</item>
         <item>Streams</item>
+        <item>Visitor Centers</item>
         <item>Find Me</item>
     </string-array>
 
@@ -28,6 +29,7 @@
         <item>@drawable/ic_state_parks</item>
         <item>@drawable/ic_lakes</item>
         <item>@drawable/ic_streams</item>
+        <item>@drawable/ic_launcher</item>
         <item>@drawable/ic_find_me</item>
     </string-array>
 

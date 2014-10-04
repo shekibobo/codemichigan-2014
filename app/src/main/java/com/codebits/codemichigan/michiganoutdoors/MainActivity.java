@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,8 +14,12 @@ import android.util.Log;
 
 import com.codebits.codemichigan.michiganoutdoors.data.api.services.MichiganData;
 import com.codebits.codemichigan.michiganoutdoors.data.api.services.MichiganDataService;
+import com.codebits.codemichigan.michiganoutdoors.data.models.LakeAttraction;
 import com.codebits.codemichigan.michiganoutdoors.data.models.MichiganAttraction;
+import com.codebits.codemichigan.michiganoutdoors.data.models.StateForestCampground;
 import com.codebits.codemichigan.michiganoutdoors.data.models.StateLandAttraction;
+import com.codebits.codemichigan.michiganoutdoors.data.models.StatePark;
+import com.codebits.codemichigan.michiganoutdoors.data.models.StateParkTrail;
 import com.codebits.codemichigan.michiganoutdoors.data.models.StateWaterAttraction;
 
 import java.util.ArrayList;
@@ -26,6 +31,8 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 import com.codebits.codemichigan.michiganoutdoors.adapters.MainPagerAdapter;
+import com.codebits.codemichigan.michiganoutdoors.data.models.StreamAttraction;
+import com.codebits.codemichigan.michiganoutdoors.data.models.VisitorCenter;
 import com.codebits.codemichigan.michiganoutdoors.fragments.FilterDrawerFragment;
 import com.codebits.codemichigan.michiganoutdoors.fragments.MapFragment;
 
@@ -43,6 +50,7 @@ public class MainActivity extends FragmentActivity
     @InjectView(R.id.pager) ViewPager pager;
     private MainPagerAdapter pagerAdapter;
     private ActionBar actionBar;
+    MichiganDataService dataService;
 
     // This needs to stay static for the MapFragment.
     // It's not pretty, but I don't feel like fighting it under our current time constraints.
@@ -87,24 +95,52 @@ public class MainActivity extends FragmentActivity
                 R.id.filter_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
 
-        MichiganDataService service = new MichiganData().getDataService();
+        dataService = new MichiganData().getDataService();
 
-        Observable<List<StateLandAttraction>> landAttractions =
-                service.stateLandAttractionList(StateLandAttraction.toQuery(), null);
+        reloadResourcesFromFilters();
+    }
 
-        Observable<List<StateWaterAttraction>> waterAttractions =
-                service.stateWaterAttractionList(StateWaterAttraction.toQuery(), null);
-
-        resourceArray = new ArrayList<>();
-        AndroidObservable.bindActivity(this, Observable.merge(landAttractions, waterAttractions))
+    private void reloadResourcesFromFilters() {
+        resourceArray.clear();
+        AndroidObservable.bindActivity(this, Observable.merge(landAttractionRequest(), waterAttractionRequest()))
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(s -> updateDataSet(s));
     }
+    private Observable<List<StateWaterAttraction>> waterAttractionRequest() {
+        ArrayList<String> queriesForWater = new ArrayList<>(2);
+        if (mFilterDrawerFragment.isChecked(FilterDrawerFragment.LAKE_FILTER_INDEX))
+            queriesForWater.add(LakeAttraction.toQuery());
+
+        if (mFilterDrawerFragment.isChecked(FilterDrawerFragment.STREAM_FILTER_INDEX))
+            queriesForWater.add(StreamAttraction.toQuery());
+
+        String waterQuery = TextUtils.join(" OR ", queriesForWater);
+
+        return dataService.stateWaterAttractionList(StateWaterAttraction.toQuery(), null);
+    }
+
+    private Observable<List<StateLandAttraction>> landAttractionRequest() {
+        ArrayList<String> queriesForLand = new ArrayList<>(4);
+        if (mFilterDrawerFragment.isChecked(FilterDrawerFragment.CAMPGROUND_FILTER_INDEX))
+            queriesForLand.add(StateForestCampground.toQuery());
+
+        if (mFilterDrawerFragment.isChecked(FilterDrawerFragment.VISITOR_CENTER_FILTER_INDEX))
+            queriesForLand.add(VisitorCenter.toQuery());
+
+        if (mFilterDrawerFragment.isChecked(FilterDrawerFragment.TRAIL_FILTER_INDEX))
+            queriesForLand.add(StateParkTrail.toQuery());
+
+        if (mFilterDrawerFragment.isChecked(FilterDrawerFragment.STATE_PARK_FILTER_INDEX))
+            queriesForLand.add(StatePark.toQuery());
+
+        String landQuery = TextUtils.join(" OR ", queriesForLand);
+
+        return dataService.stateLandAttractionList(landQuery, null);
+    }
 
     private void updateDataSet(List<? extends MichiganAttraction> s) {
         resourceArray.addAll(s);
-//        Log.i("All the stuff", resourceArray.toString());
         pagerAdapter.getAttractionFragmentListView().getAdapter().clear();
         pagerAdapter.getAttractionFragmentListView().getAdapter().addAll(resourceArray);
         pagerAdapter.getAttractionFragmentListView().getAdapter().notifyDataSetChanged();
@@ -150,8 +186,7 @@ public class MainActivity extends FragmentActivity
 
     @Override
     public void onFilterDrawerItemSelected(int position) {
-        // Loop through all drawer items and filter
-        // the ones that are selected.
+        reloadResourcesFromFilters();
     }
 
     @Override

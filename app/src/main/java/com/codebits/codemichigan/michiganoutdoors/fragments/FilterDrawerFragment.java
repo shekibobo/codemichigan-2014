@@ -62,6 +62,14 @@ public class FilterDrawerFragment extends Fragment {
     private boolean mUserLearnedDrawer;
     private boolean[] filterItemsCheckStatus;
 
+    public static final int CAMPGROUND_FILTER_INDEX = 0;
+    public static final int TRAIL_FILTER_INDEX = 1;
+    public static final int STATE_PARK_FILTER_INDEX = 2;
+    public static final int LAKE_FILTER_INDEX = 3;
+    public static final int STREAM_FILTER_INDEX = 4;
+    public static final int VISITOR_CENTER_FILTER_INDEX = 5;
+    public static final int FIND_ME_FILTER_INDEX = 6;
+
     public FilterDrawerFragment() {
     }
 
@@ -265,6 +273,10 @@ public class FilterDrawerFragment extends Fragment {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public boolean isChecked(int index) {
+        return filterItemsCheckStatus[index];
     }
 
     /**
