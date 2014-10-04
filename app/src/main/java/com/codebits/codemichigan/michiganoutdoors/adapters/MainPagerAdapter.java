@@ -3,11 +3,9 @@ package com.codebits.codemichigan.michiganoutdoors.adapters;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.util.Log;
 
 import com.codebits.codemichigan.michiganoutdoors.fragments.AttractionFragmentListView;
-import com.codebits.codemichigan.michiganoutdoors.fragments.MapFragment;
-import com.codebits.codemichigan.michiganoutdoors.fragments.SuperAwesomeCardFragment;
+import com.google.android.gms.maps.SupportMapFragment;
 
 public class MainPagerAdapter extends FragmentPagerAdapter {
 
@@ -31,8 +29,8 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
         return TITLES.length;
     }
 
-    public MapFragment getMapFragment() {
-        return (MapFragment) getItem(MAP_FRAGMENT_INDEX);
+    public SupportMapFragment getMapFragment() {
+        return (SupportMapFragment) getItem(MAP_FRAGMENT_INDEX);
     }
 
     public AttractionFragmentListView getAttractionFragmentListView() {
@@ -43,7 +41,7 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case MAP_FRAGMENT_INDEX:
-                return MapFragment.getInstance();
+                return SupportMapFragment.newInstance();
             case LIST_FRAGMENT_INDEX:
             default:
                 if (attractionFragmentListView == null) {

@@ -1,6 +1,7 @@
 package com.codebits.codemichigan.michiganoutdoors;
 
 import android.app.ActionBar;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -11,6 +12,8 @@ import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageButton;
 
 import com.codebits.codemichigan.michiganoutdoors.data.api.services.MichiganData;
 import com.codebits.codemichigan.michiganoutdoors.data.api.services.MichiganDataService;
@@ -23,8 +26,10 @@ import com.codebits.codemichigan.michiganoutdoors.data.models.StateParkTrail;
 import com.codebits.codemichigan.michiganoutdoors.data.models.StateWaterAttraction;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
+import butterknife.OnClick;
 import rx.Observable;
 import rx.android.observables.AndroidObservable;
 import rx.android.schedulers.AndroidSchedulers;
@@ -34,27 +39,30 @@ import com.codebits.codemichigan.michiganoutdoors.adapters.MainPagerAdapter;
 import com.codebits.codemichigan.michiganoutdoors.data.models.StreamAttraction;
 import com.codebits.codemichigan.michiganoutdoors.data.models.VisitorCenter;
 import com.codebits.codemichigan.michiganoutdoors.fragments.FilterDrawerFragment;
-import com.codebits.codemichigan.michiganoutdoors.fragments.MapFragment;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 
 public class MainActivity extends FragmentActivity
-    implements MapFragment.OnFragmentInteractionListener, FilterDrawerFragment.FilterDrawerCallbacks {
+    implements FilterDrawerFragment.FilterDrawerCallbacks {
 
-
-
-    ArrayList<MichiganAttraction> resourceArray;
+    ArrayList<MichiganAttraction> resourceArray = new ArrayList<>();
     private FilterDrawerFragment mFilterDrawerFragment;
     @InjectView(R.id.pager) ViewPager pager;
+    @InjectView(R.id.return_to_list_button) ImageButton returnToListViewButton;
     private MainPagerAdapter pagerAdapter;
     private ActionBar actionBar;
     MichiganDataService dataService;
 
-    // This needs to stay static for the MapFragment.
-    // It's not pretty, but I don't feel like fighting it under our current time constraints.
-    public static FragmentManager fragmentManager;
+    private FragmentManager fragmentManager;
+    private GoogleMap mMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +87,13 @@ public class MainActivity extends FragmentActivity
             @Override
             public void onPageSelected(int i) {
                 restoreActionBar();
+                toggleReturnToListViewButton(i);
+
+                SupportMapFragment mapFragment = pagerAdapter.getMapFragment();
+
+                if (i == MainPagerAdapter.MAP_FRAGMENT_INDEX) {
+                    setupMapIfNeeded();
+                }
             }
 
             @Override
@@ -89,6 +104,7 @@ public class MainActivity extends FragmentActivity
                 getFragmentManager().findFragmentById(R.id.filter_drawer);
 
         actionBar.setTitle(getCurrentTitle());
+        toggleReturnToListViewButton(pager.getCurrentItem());
 
         dataService = new MichiganData().getDataService();
         resourceArray = new ArrayList<>();
@@ -152,6 +168,42 @@ public class MainActivity extends FragmentActivity
         pagerAdapter.getAttractionFragmentListView().getAdapter().clear();
         pagerAdapter.getAttractionFragmentListView().getAdapter().addAll(resourceArray);
         pagerAdapter.getAttractionFragmentListView().getAdapter().notifyDataSetChanged();
+
+        SupportMapFragment mapFragment = pagerAdapter.getMapFragment();
+        setupMapIfNeeded();
+    }
+
+    private void setupMapIfNeeded() {
+        // Do a null check to confirm that we have not already instantiated the map.
+        if (mMap == null) {
+            // Try to obtain the map from the SupportMapFragment.
+            mMap = pagerAdapter.getMapFragment().getMap();
+            // Check if we were successful in obtaining the map.
+            if (mMap != null) {
+                setupMap();
+            }
+        }
+    }
+
+    private void setupMap() {
+        Log.wtf("setupMap", mMap.toString());
+        mMap.clear();
+        Observable.from(resourceArray)
+                .subscribeOn(Schedulers.newThread())
+                .doOnEach(s -> Log.i("Found a thing!", s.toString()))
+                .filter(s -> Arrays.asList("State Park", "State Forest Campground", "Visitor Center")
+                        .contains(s.getResourceType()))
+                .doOnEach(s -> Log.i("Found a land thing!", s.toString()))
+                .map(s -> (StateLandAttraction) s)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(s -> mMap.addMarker(
+                        new MarkerOptions()
+                                .position(new LatLng(
+                                        s.getLocation().getLatitude(),
+                                        s.getLocation().getLongitude()))
+                                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
+                                .title(s.getName())
+                                .alpha(0.7f)));
     }
 
 
@@ -207,9 +259,14 @@ public class MainActivity extends FragmentActivity
         super.onRestoreInstanceState(savedInstanceState);
     }
 
-    @Override
-    public void listNavigationButtonClicked() {
+    @OnClick(R.id.return_to_list_button)
+    void returnToListView(View button) {
         pager.setCurrentItem(MainPagerAdapter.LIST_FRAGMENT_INDEX);
-        actionBar.setTitle(getCurrentTitle());
+    }
+
+    private void toggleReturnToListViewButton(int index) {
+        returnToListViewButton.setVisibility(
+                MainPagerAdapter.LIST_FRAGMENT_INDEX == index ? View.GONE : View.VISIBLE
+        );
     }
 }
