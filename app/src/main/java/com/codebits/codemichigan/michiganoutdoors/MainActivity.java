@@ -108,6 +108,7 @@ public class MainActivity extends FragmentActivity
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(s -> updateDataSet(s));
     }
+
     private Observable<List<StateWaterAttraction>> waterAttractionRequest() {
         ArrayList<String> queriesForWater = new ArrayList<>(2);
         if (mFilterDrawerFragment.isChecked(FilterDrawerFragment.LAKE_FILTER_INDEX))
@@ -116,9 +117,12 @@ public class MainActivity extends FragmentActivity
         if (mFilterDrawerFragment.isChecked(FilterDrawerFragment.STREAM_FILTER_INDEX))
             queriesForWater.add(StreamAttraction.toQuery());
 
-        String waterQuery = TextUtils.join(" OR ", queriesForWater);
-
-        return dataService.stateWaterAttractionList(StateWaterAttraction.toQuery(), null);
+        if (queriesForWater.isEmpty()) {
+            return Observable.empty();
+        } else {
+            String waterQuery = TextUtils.join(" OR ", queriesForWater);
+            return dataService.stateWaterAttractionList(waterQuery, null);
+        }
     }
 
     private Observable<List<StateLandAttraction>> landAttractionRequest() {
@@ -135,9 +139,12 @@ public class MainActivity extends FragmentActivity
         if (mFilterDrawerFragment.isChecked(FilterDrawerFragment.STATE_PARK_FILTER_INDEX))
             queriesForLand.add(StatePark.toQuery());
 
-        String landQuery = TextUtils.join(" OR ", queriesForLand);
-
-        return dataService.stateLandAttractionList(landQuery, null);
+        if (queriesForLand.isEmpty()) {
+            return Observable.empty();
+        } else {
+            String landQuery = TextUtils.join(" OR ", queriesForLand);
+            return dataService.stateLandAttractionList(landQuery, null);
+        }
     }
 
     private void updateDataSet(List<? extends MichiganAttraction> s) {
