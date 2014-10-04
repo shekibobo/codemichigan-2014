@@ -10,9 +10,8 @@ import lombok.ToString;
  * Created by joshuakovach on 10/4/14.
  */
 @ToString @NoArgsConstructor
-public class StateWaterAttraction extends MichiganDataResource {
+public class StateWaterAttraction extends MichiganAttraction {
     @Getter String id; // Not unique!!!!
-    @Getter String name;
     @Getter String body;
     @Getter String tackle;
     @Getter String type;
@@ -33,6 +32,11 @@ public class StateWaterAttraction extends MichiganDataResource {
     @SerializedName("laketroutminsize") @Getter String lakeTroutMinSize;
     @SerializedName("rainbowtroutminsize") @Getter String rainbowTroutMinSize;
     @SerializedName("dailypossessionlimit") @Getter String dailyPossessionLimit;
+
+
+    public String type() {
+        return county;
+    }
 
     public static String toQuery() {
         return null;

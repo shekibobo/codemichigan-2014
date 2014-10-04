@@ -1,6 +1,5 @@
 package com.codebits.codemichigan.michiganoutdoors;
 
-
 import android.app.ActionBar;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -14,9 +13,11 @@ import android.util.Log;
 
 import com.codebits.codemichigan.michiganoutdoors.data.api.services.MichiganData;
 import com.codebits.codemichigan.michiganoutdoors.data.api.services.MichiganDataService;
+import com.codebits.codemichigan.michiganoutdoors.data.models.MichiganAttraction;
 import com.codebits.codemichigan.michiganoutdoors.data.models.StateLandAttraction;
 import com.codebits.codemichigan.michiganoutdoors.data.models.StateWaterAttraction;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import rx.Observable;
@@ -37,6 +38,7 @@ public class MainActivity extends FragmentActivity
 
 
 
+    ArrayList<MichiganAttraction> resourceArray;
     private FilterDrawerFragment mFilterDrawerFragment;
     @InjectView(R.id.pager) ViewPager pager;
     private MainPagerAdapter pagerAdapter;
@@ -93,11 +95,17 @@ public class MainActivity extends FragmentActivity
         Observable<List<StateWaterAttraction>> waterAttractions =
                 service.stateWaterAttractionList(StateWaterAttraction.toQuery(), null);
 
+        resourceArray = new ArrayList<>();
         AndroidObservable.bindActivity(this, Observable.merge(landAttractions, waterAttractions))
                 .subscribeOn(Schedulers.newThread())
-                .flatMap(s -> Observable.from(s))
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(s -> Log.i("RESOURCE", s.toString()));
+                .subscribe(s -> updateDataSet(s));
+    }
+
+    private void updateDataSet(List<? extends MichiganAttraction> s) {
+        resourceArray.addAll(s);
+        Log.i("All the stuff", resourceArray.toString());
+        // TODO: Update the active adapters
     }
 
     @Override

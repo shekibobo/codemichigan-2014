@@ -12,9 +12,8 @@ import lombok.ToString;
  * Created by joshuakovach on 10/3/14.
  */
 @ToString @NoArgsConstructor
-public class StateLandAttraction extends MichiganDataResource {
+public class StateLandAttraction extends MichiganAttraction {
     @Getter long id;
-    @Getter String name;
     @Getter String phone;
     @Getter String ttynum;
 
