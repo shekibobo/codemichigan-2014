@@ -124,37 +124,6 @@ public class MainActivity extends FragmentActivity
                                    Log.i("RESOURCE", michiganDataResource.toString());
                                }
                            });
-//        service.stateLandAttractionList(StatePark.toQuery() + " OR " + StateForestCampground.toQuery())
-//                .subscribeOn(Schedulers.newThread())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .flatMap(new Func1<List<StateLandAttraction>, Observable<StateLandAttraction>>() {
-//                    @Override
-//                    public Observable<StateLandAttraction> call(List<StateLandAttraction> stateParks) {
-//                        return Observable.from(stateParks);
-//                    }
-//                })
-//                .subscribe(new Action1<StateLandAttraction>() {
-//                    @Override
-//                    public void call(StateLandAttraction statePark) {
-//                        Log.i("State Land Attraction", statePark.toString());
-//                    }
-//                });
-//
-//        service.stateWaterAttractionList(StateWaterAttraction.toQuery())
-//                .subscribeOn(Schedulers.newThread())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .flatMap(new Func1<List<StateWaterAttraction>, Observable<StateWaterAttraction>>() {
-//                    @Override
-//                    public Observable<StateWaterAttraction> call(List<StateWaterAttraction> stateWaterAttractions) {
-//                        return Observable.from(stateWaterAttractions);
-//                    }
-//                })
-//                .subscribe(new Action1<StateWaterAttraction>() {
-//                    @Override
-//                    public void call(StateWaterAttraction stateWaterAttraction) {
-//                        Log.i("State Water Attraction", stateWaterAttraction.toString());
-//                    }
-//                });
     }
 
     @Override
