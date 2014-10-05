@@ -51,7 +51,8 @@
         </activity>
         <activity
             android:name=".activities.WaterAttractionActivity"
-            android:label="Water Attraction" >
+            android:label="@string/title_activity_water_attraction"
+            android:parentActivityName=".activities.MainActivity" >
         </activity>
     </application>
 
