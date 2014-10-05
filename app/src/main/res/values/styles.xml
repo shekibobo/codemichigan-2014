@@ -17,6 +17,7 @@
     <!-- Application theme that sets the Action Bar to the app green -->
     <style name="ActionBarTheme" parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
         <item name="android:background">@color/green</item>
+        <item name="android:icon">@drawable/ic_nav_pure_adventure</item>
     </style>
 
 </resources>
