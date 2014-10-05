@@ -58,7 +58,7 @@ public class StateLandAttraction extends MichiganAttraction {
     }
 
     public String getCampingStyles() {
-        if (this.campingStyles.length() == 0) {
+        if (this.campingStyles != null && this.campingStyles.length() == 0) {
             ArrayList<String> styles = new ArrayList<>();
 
             if (isCabin()) styles.add("Cabin");
@@ -77,7 +77,7 @@ public class StateLandAttraction extends MichiganAttraction {
     }
 
     public String getVehicles() {
-        if (this.vehicles.length() == 0) {
+        if (this.vehicles != null && this.vehicles.length() == 0) {
             ArrayList<String> vehicles = new ArrayList<>();
 
             if (isBoat()) vehicles.add("Boat");
