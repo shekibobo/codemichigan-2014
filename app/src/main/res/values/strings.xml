@@ -42,10 +42,8 @@
     </string-array>
 
     <string name="filter_drawer_header_text">Tap Items to Find</string>
-
     <string name="title_activity_splash_screen"></string>
     <string name="title_activity_land_attraction">Land Attraction</string>
-
     <string name="cabin">Cabin</string>
     <string name="yurt">Yurt</string>
     <string name="rustic">Rustic</string>
@@ -83,4 +81,8 @@
         <item>@string/accessible</item>
         <item>@string/active</item>
     </string-array>
+
+    <string name="title_activity_water_attration">WaterAttrationActivity</string>
+    <string name="hello_world">Hello world!</string>
+
 </resources>
