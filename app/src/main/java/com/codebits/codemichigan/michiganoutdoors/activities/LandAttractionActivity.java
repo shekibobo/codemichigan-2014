@@ -56,12 +56,16 @@ public class LandAttractionActivity extends Activity {
             siteCallButton.setText(R.string.no_phone_number);
             siteCallButton.setEnabled(false);
         }
-        siteLocationButton.setText(R.string.locate);
-        sitePermitText.setText("Permit Required: " + (mLandAttraction.isPermitRequired() ? "Yes" : "No"));
+
+        String permitRequired = "Permit Required: " + (mLandAttraction.isPermitRequired() ? "Yes" : "No");
+        String entranceFee = "Entrance Fee: " + (mLandAttraction.isEntranceFee() ? "Yes" : "No");
+        String accessible = "Accessible: " + (mLandAttraction.isAccessible() ? "Yes" : "No");
+        sitePermitText.setText(TextUtils.join("\n", Arrays.asList(permitRequired, entranceFee, accessible)));
 
         List<String> otherStuff = new ArrayList<>();
         if (mLandAttraction.getDescription() != null) otherStuff.add(mLandAttraction.getDescription());
         if (mLandAttraction.getGroupRate() > 0) otherStuff.add("Group Rate: " + mLandAttraction.getGroupRate());
+        if (mLandAttraction.getOceSiteFee() > 0) otherStuff.add("OCE Site Fee: " + mLandAttraction.getOceSiteFee());
         if (mLandAttraction.getTotalNumOfSites() > 0) otherStuff.add("Total Number of Sites: " + mLandAttraction.getTotalNumOfSites());
         if (mLandAttraction.getVehicles() != null) otherStuff.add("Allowed Vehicles: " + mLandAttraction.getVehicles());
 
