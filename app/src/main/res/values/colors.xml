@@ -2,5 +2,6 @@
 <resources>
     <item name="green" type="color">#769E89</item>
     <item name="blue" type="color">#3E606f</item>
-
+    <color name="red">#c77966</color>
+    <color name="cream">#e2e4d7</color>
 </resources>

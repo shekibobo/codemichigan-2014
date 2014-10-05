@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <string name="app_name">Michigan Outdoors</string>
     <string name="title_section1">Section 1</string>
     <string name="title_section2">Section 2</string>
@@ -12,6 +13,7 @@
     <string name="drawer_close">Swipe to Filter</string>
     <string name="action_bar_filter_text">Filter</string>
     <string name="attraction_list_header_text">Results</string>
+    <string name="title_activity_land_attraction">Land Attraction</string>
 
     <string-array name="filter_array">
         <item>Campgrounds</item>
@@ -22,7 +24,6 @@
         <item>Visitor Centers</item>
         <item>Near Me</item>
     </string-array>
-
     <string-array name="filter_icons">
         <item>@drawable/ic_campground</item>
         <item>@drawable/ic_trails</item>
@@ -32,7 +33,6 @@
         <item>@drawable/ic_visitor_center</item>
         <item>@drawable/ic_find_me</item>
     </string-array>
-
     <string-array name="attraction_icons">
         <item>@drawable/ic_campground</item>
         <item>@drawable/ic_trails</item>
@@ -43,6 +43,41 @@
     </string-array>
 
     <string name="filter_drawer_header_text">Tap to Filter</string>
-
     <string name="title_activity_splash_screen"></string>
+
+    <string name="cabin">Cabin</string>
+    <string name="yurt">Yurt</string>
+    <string name="rustic">Rustic</string>
+    <string name="modern">Modern</string>
+    <string name="semimodern">Semi-Modern</string>
+    <string name="teepee">Teepee</string>
+    <string name="boat">Boat</string>
+    <string name="equestrian">Equestrian</string>
+    <string name="minicabin">Mini-Cabin</string>
+    <string name="lodge">Lodge</string>
+    <string name="walkin">Walk-In</string>
+    <string name="off_road_vehicles">Off-Road Vehicles</string>
+    <string name="permit_required">Permit Required</string>
+    <string name="entrance_fee">Entrance Fee</string>
+    <string name="accessible">Handicap Accessible</string>
+    <string name="active">Active</string>
+
+    <string-array name="site_options">
+        <item>@string/cabin</item>
+        <item>@string/yurt</item>
+        <item>@string/rustic</item>
+        <item>@string/modern</item>
+        <item>@string/semimodern</item>
+        <item>@string/teepee</item>
+        <item>@string/boat</item>
+        <item>@string/equestrian</item>
+        <item>@string/minicabin</item>
+        <item>@string/lodge</item>
+        <item>@string/walkin</item>
+        <item>@string/off_road_vehicles</item>
+        <item>@string/permit_required</item>
+        <item>@string/entrance_fee</item>
+        <item>@string/accessible</item>
+        <item>@string/active</item>
+    </string-array>
 </resources>
