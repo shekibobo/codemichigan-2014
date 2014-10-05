@@ -44,25 +44,18 @@ public class WaterAttractionActivity extends Activity {
         ArrayList<String> infoList = new ArrayList<>();
 
         infoList.add("Open Season: " + sWaterAttraction.getOpenSeason());
-
         infoList.add("Fishing/Possession Season: " + sWaterAttraction.getFishingSeasonPossessionSeason());
-
         infoList.add("Tackle: " + sWaterAttraction.getTackle());
-
-        infoList.add("\uD83D\uDC1F " + " Splake Minimum Size: " + sWaterAttraction.getSpLakeMinSize());
-
-        infoList.add("\uD83D\uDC1F "+ "Brook Trout Minimum Size: " + sWaterAttraction.getBrookTroutMinSize());
-
-        infoList.add("\uD83D\uDC1F " + "Pink Salmon Minimum Size: " + sWaterAttraction.getPinkSalmonMinSize());
-
-        infoList.add("\uD83D\uDC1F " + "Brown Trout Minimum Size: " + sWaterAttraction.getBrownTroutMinSize());
-
-        infoList.add("\uD83D\uDC1F " + "Coho Salmon Minimum Size: " + sWaterAttraction.getCohoSalmonMinSize());
-
-        infoList.add("\uD83D\uDC1F " + "Rainbow Trout Minimum Size: " + sWaterAttraction.getRainbowTroutMinSize());
-
+        infoList.add("");
+        String fish = "\uD83D\uDC1F ";
+        infoList.add(fish + "Splake Minimum Size: " + sWaterAttraction.getSpLakeMinSize());
+        infoList.add(fish + "Brook Trout Minimum Size: " + sWaterAttraction.getBrookTroutMinSize());
+        infoList.add(fish + "Pink Salmon Minimum Size: " + sWaterAttraction.getPinkSalmonMinSize());
+        infoList.add(fish + "Brown Trout Minimum Size: " + sWaterAttraction.getBrownTroutMinSize());
+        infoList.add(fish + "Coho Salmon Minimum Size: " + sWaterAttraction.getCohoSalmonMinSize());
+        infoList.add(fish + "Rainbow Trout Minimum Size: " + sWaterAttraction.getRainbowTroutMinSize());
+        infoList.add("");
         infoList.add("Daily Possession Limit: " + sWaterAttraction.getDailyPossessionLimit());
-
 
         detailT.setText(TextUtils.join("\n", infoList));
     }
