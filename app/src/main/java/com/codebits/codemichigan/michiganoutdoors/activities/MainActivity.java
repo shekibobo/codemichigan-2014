@@ -216,7 +216,7 @@ public class MainActivity extends FragmentActivity
                 @Override
                 public boolean onQueryTextSubmit(String query)
                 {
-                    reloadResourcesFromFilters(query);
+                    reloadResourcesFromFilters(query+"*");
                     return true;
                 }
             };
