@@ -29,7 +29,7 @@
         <item>@drawable/ic_state_parks</item>
         <item>@drawable/ic_lakes</item>
         <item>@drawable/ic_streams</item>
-        <item>@drawable/ic_launcher</item>
+        <item>@drawable/ic_visitor_center</item>
         <item>@drawable/ic_find_me</item>
     </string-array>
     <string-array name="attraction_icons">
@@ -38,7 +38,7 @@
         <item>@drawable/ic_state_parks</item>
         <item>@drawable/ic_lakes</item>
         <item>@drawable/ic_streams</item>
-        <item>@drawable/ic_find_me</item>
+        <item>@drawable/ic_visitor_center</item>
     </string-array>
 
     <string name="filter_drawer_header_text">Tap to Filter</string>
