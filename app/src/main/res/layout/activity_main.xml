@@ -13,11 +13,10 @@
         android:layout_height="match_parent" >
 
 
-        <android.support.v4.view.ViewPager
-            android:id="@+id/pager"
+        <FrameLayout
+            android:id="@+id/container"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:context=".MainActivity" />
+            android:layout_height="match_parent" />
 
     </RelativeLayout>
 
@@ -27,6 +26,5 @@
         android:layout_gravity="start"
         android:name="com.codebits.codemichigan.michiganoutdoors.fragments.FilterDrawerFragment"
         tools:layout="@layout/fragment_filter_drawer" />
-
 
 </android.support.v4.widget.DrawerLayout>

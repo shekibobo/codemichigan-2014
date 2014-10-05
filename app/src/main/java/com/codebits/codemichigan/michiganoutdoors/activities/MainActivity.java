@@ -1,19 +1,16 @@
 package com.codebits.codemichigan.michiganoutdoors.activities;
 
 import android.app.ActionBar;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.text.TextUtils;
-import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.SearchView;
 
 import com.codebits.codemichigan.michiganoutdoors.R;
-import com.codebits.codemichigan.michiganoutdoors.adapters.MainPagerAdapter;
 import com.codebits.codemichigan.michiganoutdoors.data.api.services.MichiganData;
 import com.codebits.codemichigan.michiganoutdoors.data.api.services.MichiganDataService;
 import com.codebits.codemichigan.michiganoutdoors.data.models.LakeAttraction;
@@ -26,34 +23,30 @@ import com.codebits.codemichigan.michiganoutdoors.data.models.StateWaterAttracti
 import com.codebits.codemichigan.michiganoutdoors.data.models.StreamAttraction;
 import com.codebits.codemichigan.michiganoutdoors.data.models.VisitorCenter;
 import com.codebits.codemichigan.michiganoutdoors.fragments.FilterDrawerFragment;
-import com.codebits.codemichigan.michiganoutdoors.fragments.MapFragment;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import rx.Observable;
 import rx.android.observables.AndroidObservable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
+import com.codebits.codemichigan.michiganoutdoors.fragments.AttractionsFragment;
+
+import org.parceler.Parcels;
 
 public class MainActivity extends FragmentActivity
-    implements MapFragment.OnFragmentInteractionListener, FilterDrawerFragment.FilterDrawerCallbacks {
-
-
+    implements FilterDrawerFragment.FilterDrawerCallbacks,
+                AttractionsFragment.OnFragmentInteractionListener {
 
     ArrayList<MichiganAttraction> resourceArray;
     private FilterDrawerFragment mFilterDrawerFragment;
-    @InjectView(R.id.pager) ViewPager pager;
-    private MainPagerAdapter pagerAdapter;
     private ActionBar actionBar;
     MichiganDataService dataService;
 
-    // This needs to stay static for the MapFragment.
-    // It's not pretty, but I don't feel like fighting it under our current time constraints.
-    public static FragmentManager fragmentManager;
+    private AttractionsFragment mAttractionsFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,32 +55,14 @@ public class MainActivity extends FragmentActivity
         ButterKnife.inject(this);
 
         actionBar = getActionBar();
-        fragmentManager = getSupportFragmentManager();
-
-        pagerAdapter = new MainPagerAdapter(getSupportFragmentManager());
-        pager.setAdapter(pagerAdapter);
-
-        // This is here to allow drawer swiping from the map view (potentially)
-        final int pageMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4, getResources()
-                .getDisplayMetrics());
-        pager.setPageMargin(pageMargin);
-        pager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int i, float v, int i2) { }
-
-            @Override
-            public void onPageSelected(int i) {
-                restoreActionBar();
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int i) { }
-        });
 
         mFilterDrawerFragment = (FilterDrawerFragment)
                 getFragmentManager().findFragmentById(R.id.filter_drawer);
 
-        actionBar.setTitle(getCurrentTitle());
+        actionBar.setTitle(R.string.app_name);
+
+        mAttractionsFragment = AttractionsFragment.newInstance();
+        getFragmentManager().beginTransaction().replace(R.id.container, mAttractionsFragment).commit();
 
         dataService = new MichiganData().getDataService();
         resourceArray = new ArrayList<>();
@@ -149,9 +124,9 @@ public class MainActivity extends FragmentActivity
     private void updateDataSet(List<? extends MichiganAttraction> s) {
         updateHeaderView();
         resourceArray.addAll(s);
-        pagerAdapter.getAttractionFragmentListView().getAdapter().clear();
-        pagerAdapter.getAttractionFragmentListView().getAdapter().addAll(resourceArray);
-        pagerAdapter.getAttractionFragmentListView().getAdapter().notifyDataSetChanged();
+        mAttractionsFragment.getAdapter().clear();
+        mAttractionsFragment.getAdapter().addAll(resourceArray);
+        mAttractionsFragment.getAdapter().notifyDataSetChanged();
     }
 
 
@@ -171,12 +146,8 @@ public class MainActivity extends FragmentActivity
         if (actionBar != null) {
             actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
             actionBar.setDisplayShowTitleEnabled(true);
-            actionBar.setTitle(getCurrentTitle());
+            actionBar.setTitle(R.string.app_name);
         }
-    }
-
-    private String getCurrentTitle() {
-        return MainPagerAdapter.TITLES[pager.getCurrentItem()];
     }
 
     private void updateHeaderView() {
@@ -196,8 +167,7 @@ public class MainActivity extends FragmentActivity
             text = TextUtils.join(", ", appliedFilters);
         }
 
-        pagerAdapter.getAttractionFragmentListView().getHeaderView().setText(text);
-
+        mAttractionsFragment.updateHeader(text);
     }
 
     @Override
@@ -250,9 +220,12 @@ public class MainActivity extends FragmentActivity
     }
 
     @Override
-    public void listNavigationButtonClicked() {
-        pager.setCurrentItem(MainPagerAdapter.LIST_FRAGMENT_INDEX);
-        actionBar.setTitle(getCurrentTitle());
-
+    public void onAttractionSelected(MichiganAttraction attraction) {
+        if (attraction.isLandAttraction()) {
+            StateLandAttraction landAttraction = (StateLandAttraction) attraction;
+            Intent intent = new Intent(this, LandAttractionActivity.class);
+            intent.putExtra("STATE_LAND_ATTRACTION", Parcels.wrap(landAttraction));
+            startActivity(intent);
+        }
     }
 }

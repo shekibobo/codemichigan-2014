@@ -1,0 +1,105 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="com.codebits.codemichigan.michiganoutdoors.activities.LandAttractionActivity"
+    android:background="@color/cream">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Burton's Landing State Forest Campground"
+        android:id="@+id/site_name_heading"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:fontFamily="sans-serif"
+        android:textColor="@color/blue"
+        android:textStyle="bold"
+        android:textSize="@dimen/activity_heading_text" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="County | Style"
+        android:id="@+id/site_county_text"
+        android:fontFamily="sans-serif"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="@color/green"
+        android:layout_below="@+id/site_name_heading"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="(269) 867 5309"
+        android:id="@+id/site_call_button"
+        android:drawablePadding="5dp"
+        android:fontFamily="sans-serif"
+        android:textStyle="bold"
+        android:textColor="@color/red"
+        android:drawableLeft="@drawable/ic_phone"
+        android:layout_below="@+id/site_county_text"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Permit Required: Yes"
+        android:id="@+id/site_permit_text"
+        android:fontFamily="sans-serif"
+        android:textColor="@color/blue"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_below="@+id/site_call_button"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:id="@+id/campground_detail_text_layout"
+        android:minHeight="330dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="montes glaciales in oceano Germanico ipsum dolor sit amet RIBEYE PORK? IS IT GOOD THO?"
+            android:id="@+id/campground_detailed_text"
+            android:fontFamily="sans-serif"
+            android:textColor="@color/green"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="15dp" />
+    </RelativeLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Locate"
+        android:id="@+id/site_locate_button"
+        android:drawableLeft="@drawable/ic_find_me"
+        android:drawablePadding="5dp"
+        android:fontFamily="sans-serif"
+        android:textStyle="bold"
+        android:textColor="@color/blue"
+        android:layout_toEndOf="@+id/site_call_button"
+        android:layout_alignTop="@+id/site_call_button"
+        android:layout_alignRight="@+id/site_name_heading"
+        android:layout_alignEnd="@+id/site_name_heading" />
+
+</RelativeLayout>
