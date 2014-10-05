@@ -1,8 +1,6 @@
 package com.codebits.codemichigan.michiganoutdoors.data.models;
 
-import android.content.res.Resources;
 import android.location.Location;
-import android.support.annotation.StringRes;
 import android.text.TextUtils;
 
 import com.google.gson.annotations.SerializedName;
