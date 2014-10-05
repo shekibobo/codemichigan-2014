@@ -35,7 +35,6 @@
         android:layout_marginLeft="10dp"
         android:layout_toLeftOf="@+id/attraction_list_arrow_image"
         android:layout_toStartOf="@+id/attraction_list_arrow_image"
-        android:text="Alea iacta est alea iacta est alea iacta est"
         android:minLines="1"
         android:layout_alignParentBottom="true"
         android:layout_alignParentTop="true"
