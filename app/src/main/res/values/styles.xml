@@ -2,7 +2,7 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
+        <item name="android:actionBarStyle">@style/ActionBarTheme</item>
     </style>
 
 
@@ -13,6 +13,10 @@
         <item name="android:windowBackground">@color/green</item>
         <item name="android:background">@color/green</item>
 
+    </style>
+    <!-- Application theme that sets the Action Bar to the app green -->
+    <style name="ActionBarTheme" parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
+        <item name="android:background">@color/green</item>
     </style>
 
 </resources>

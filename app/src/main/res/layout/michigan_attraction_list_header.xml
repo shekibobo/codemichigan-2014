@@ -1,5 +1,8 @@
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+
+
     android:id="@+id/attraction_header"
+
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:height="55dp"
@@ -13,3 +16,4 @@
     android:fontFamily="sans-serif"
     android:textStyle="bold"
     />
+

@@ -1,23 +1,52 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="60dp" >
+    android:layout_height="wrap_content" >
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:id="@+id/attraction_icon"
         android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginLeft="30dp" />
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp" />
+
+
+
+    <ImageView
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:id="@+id/attraction_list_arrow_image"
+        android:src="@drawable/ic_right_arrow"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="15dp"
+        android:layout_centerVertical="true"
+
+
+        />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:id="@+id/attraction_name"
-        android:layout_centerVertical="true"
         android:layout_toRightOf="@+id/attraction_icon"
         android:layout_toEndOf="@+id/attraction_icon"
-        android:layout_marginLeft="30dp" />
+        android:fontFamily="sans-serif"
+        android:textSize="20dp"
+        android:textColor="@color/green"
+        android:layout_marginLeft="10dp"
+        android:layout_toLeftOf="@+id/attraction_list_arrow_image"
+        android:layout_toStartOf="@+id/attraction_list_arrow_image"
+        android:text="Alea iacta est alea iacta est alea iacta est"
+        android:minLines="1"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentTop="true"
+        android:gravity="fill_vertical"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_centerVertical="true"
+        android:minHeight="50dp" />
 </RelativeLayout>

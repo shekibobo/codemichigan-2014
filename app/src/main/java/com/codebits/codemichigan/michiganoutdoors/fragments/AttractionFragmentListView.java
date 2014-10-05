@@ -3,6 +3,7 @@ package com.codebits.codemichigan.michiganoutdoors.fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import com.codebits.codemichigan.michiganoutdoors.adapters.MichiganAttractionAda
 import com.codebits.codemichigan.michiganoutdoors.data.models.MichiganAttraction;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by kenny on 10/4/14.
@@ -41,11 +43,11 @@ public class AttractionFragmentListView extends Fragment {
         mHeaderView.setText("Swipe Right for Attractions!");
         mListView.addHeaderView(mHeaderView);
 
-        // Temporary
         ArrayList<MichiganAttraction> li = new ArrayList<>();
 
         attractionAdapter = new MichiganAttractionAdapter(getActivity().getApplicationContext(),
                 R.layout.michigan_attraction_list_item, li);
+
 
         mListView.setAdapter(attractionAdapter);
 

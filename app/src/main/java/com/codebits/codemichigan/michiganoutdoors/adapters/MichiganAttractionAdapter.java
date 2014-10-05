@@ -26,11 +26,11 @@ public class MichiganAttractionAdapter extends ArrayAdapter<MichiganAttraction> 
     TypedArray attractionIcons;
     final String[] attractionNames = {
             "State Forest Campground",
-            "State Park",
             "State Park Trail",
-            "Visitor Center",
+            "State Park",
+            "Lake",
             "Stream",
-            "Lake"
+            "Visitor Center"
     };
 
     public MichiganAttractionAdapter(Context context, int resourceId, ArrayList<MichiganAttraction> dataList) {
