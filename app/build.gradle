@@ -49,6 +49,8 @@ dependencies {
 
     compile 'com.netflix.rxjava:rxjava-android:0.20.+'
 
+    compile 'pl.charmas.android:android-reactive-location:0.2@aar'
+
     compile 'com.squareup.retrofit:retrofit:1.6+'
     compile 'com.squareup.okhttp:okhttp-urlconnection:2.0.+'
 
