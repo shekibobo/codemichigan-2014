@@ -38,6 +38,11 @@ public class StateWaterAttraction extends MichiganAttraction {
     @SerializedName("dailypossessionlimit") @Getter @Setter String dailyPossessionLimit;
 
     public static String toQuery() {
+
         return null;
+    }
+
+    public String getGeoLocation() {
+        return "0,0";
     }
 }

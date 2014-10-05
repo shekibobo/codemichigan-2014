@@ -63,6 +63,7 @@
     <string name="accessible">Handicap Accessible</string>
     <string name="active">Active</string>
     <string name="locate">Locate</string>
+    <string name="no_phone_number">Not Available</string>
 
     <string-array name="site_options">
         <item>@string/cabin</item>

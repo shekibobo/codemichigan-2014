@@ -8,6 +8,8 @@ import com.google.gson.annotations.SerializedName;
 import org.parceler.Parcel;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -92,6 +94,18 @@ public class StateLandAttraction extends MichiganAttraction {
         }
 
         return this.vehicles;
+    }
+
+    public String getGeoLocation() {
+        List<String> latlong;
+        if (getLocation() != null) {
+            latlong = Arrays.asList(Double.toString(getLocation().getLatitude()),
+                                    Double.toString(getLocation().getLongitude()));
+        } else {
+            latlong = Arrays.asList("0", "0");
+        }
+
+        return TextUtils.join(",", latlong);
     }
 }
 

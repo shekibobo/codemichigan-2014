@@ -43,7 +43,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="(269) 867 5309"
+        android:text="@string/no_phone_number"
         android:id="@+id/site_call_button"
         android:drawablePadding="5dp"
         android:fontFamily="sans-serif"
@@ -58,7 +58,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Locate"
+        android:text="@string/locate"
         android:id="@+id/site_locate_button"
         android:drawableLeft="@drawable/ic_find_me"
         android:drawablePadding="5dp"
