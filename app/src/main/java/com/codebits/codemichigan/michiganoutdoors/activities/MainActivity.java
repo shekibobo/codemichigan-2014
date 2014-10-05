@@ -96,7 +96,7 @@ public class MainActivity extends FragmentActivity
 
     private void reloadResourcesFromFilters(String query) {
         resourceArray.clear();
-<<<<<<< HEAD
+
         if (mFilterDrawerFragment.isChecked(FilterDrawerFragment.FIND_ME_FILTER_INDEX)) {
             double longitude = 0;
             double latitude = 0;
@@ -105,7 +105,7 @@ public class MainActivity extends FragmentActivity
                 latitude = gps.getLatitude();
                 longitude = gps.getLongitude();
                 Toast.makeText(getApplicationContext(), "Your location is: "+latitude + " Long: " + longitude, Toast.LENGTH_LONG).show();
-                res = "within_circle(location, " + latitude+ ", " + longitude + ", 32186) AND ";
+                res = "within_circle(location, " + latitude+ ", " + longitude + ", 32186)";// AND ";
             } else {
                 gps.showSettingsAlert();
                 res = null;
@@ -117,14 +117,24 @@ public class MainActivity extends FragmentActivity
             AndroidObservable.bindActivity(this, Observable.merge(landAttractionRequest(query, res), waterAttractionRequest(query, res)))
                     .subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(s -> updateDataSet(s));
+                    .subscribe(s -> updateDataSet(s),
+                            error -> {
+                                Toast.makeText(this, error.getMessage(), Toast.LENGTH_SHORT);
+                                Log.e("ERROR", error.getCause().getMessage());
+                                updateDataSet(new ArrayList<MichiganAttraction>());
+                            });
         } else {
             AndroidObservable.bindActivity(this, Observable.merge(landAttractionRequest(query, null), waterAttractionRequest(query, null)))
                     .subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                        s -> updateDataSet(s),
-                        error -> Toast.makeText(this, error.getCause().toString(), Toast.LENGTH_SHORT));
+                    .subscribe(
+                            s -> updateDataSet(s),
+                            error -> {
+                                Toast.makeText(this, error.getMessage(), Toast.LENGTH_SHORT);
+                                Log.e("ERROR", error.getCause().getMessage());
+                                updateDataSet(new ArrayList<MichiganAttraction>());
+                            });
+        }
         if (landNotFound && waterNotFound) {
             // Clear all items
             updateHeaderView();
