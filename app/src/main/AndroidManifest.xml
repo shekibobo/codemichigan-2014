@@ -49,6 +49,11 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.codebits.codemichigan.michiganoutdoors.activities.MainActivity" />
         </activity>
+        <activity
+            android:name=".activities.WaterAttractionActivity"
+            android:label="@string/title_activity_water_attraction"
+            android:parentActivityName=".activities.MainActivity" >
+        </activity>
     </application>
 
 </manifest>

@@ -9,5 +9,6 @@ public class MichiganDataRequestIntercepter implements RequestInterceptor {
     @Override
     public void intercept(RequestInterceptor.RequestFacade request) {
         request.addHeader("X-App-Token", "VnX35ZdecINJ66pVEUCsHFLo1");
+        request.addHeader("Cache-Control", "public, max-age=640000, s-maxage=640000 , max-stale=2419200");
     }
 }

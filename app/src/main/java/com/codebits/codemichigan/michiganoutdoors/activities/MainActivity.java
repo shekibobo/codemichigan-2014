@@ -96,6 +96,7 @@ public class MainActivity extends FragmentActivity
 
     private void reloadResourcesFromFilters(String query) {
         resourceArray.clear();
+<<<<<<< HEAD
         if (mFilterDrawerFragment.isChecked(FilterDrawerFragment.FIND_ME_FILTER_INDEX)) {
             double longitude = 0;
             double latitude = 0;
@@ -121,9 +122,9 @@ public class MainActivity extends FragmentActivity
             AndroidObservable.bindActivity(this, Observable.merge(landAttractionRequest(query, null), waterAttractionRequest(query, null)))
                     .subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(s -> updateDataSet(s));
-        }
-
+                .subscribe(
+                        s -> updateDataSet(s),
+                        error -> Toast.makeText(this, error.getCause().toString(), Toast.LENGTH_SHORT));
         if (landNotFound && waterNotFound) {
             // Clear all items
             updateHeaderView();
@@ -298,6 +299,11 @@ public class MainActivity extends FragmentActivity
             StateLandAttraction landAttraction = (StateLandAttraction) attraction;
             Intent intent = new Intent(this, LandAttractionActivity.class);
             intent.putExtra("STATE_LAND_ATTRACTION", Parcels.wrap(landAttraction));
+            startActivity(intent);
+        }else if(attraction.isWaterAttraction()){
+            StateWaterAttraction waterAttraction = (StateWaterAttraction) attraction;
+            Intent intent = new Intent(this, WaterAttractionActivity.class);
+            intent.putExtra("STATE_WATER_ATTRACTION",Parcels.wrap(waterAttraction));
             startActivity(intent);
         }
     }

@@ -23,6 +23,7 @@
         <item>Visitor Centers</item>
         <item>Near Me</item>
     </string-array>
+
     <string-array name="filter_icons">
         <item>@drawable/ic_campground</item>
         <item>@drawable/ic_trails</item>
@@ -42,9 +43,9 @@
     </string-array>
 
     <string name="filter_drawer_header_text">Tap Items to Find</string>
-
     <string name="title_activity_splash_screen"></string>
     <string name="title_activity_land_attraction">Land Attraction</string>
+    <string name="title_activity_water_attraction">Water Attraction</string>
 
     <string name="cabin">Cabin</string>
     <string name="yurt">Yurt</string>
@@ -83,4 +84,5 @@
         <item>@string/accessible</item>
         <item>@string/active</item>
     </string-array>
+
 </resources>

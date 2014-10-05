@@ -16,7 +16,7 @@ import lombok.ToString;
 @ToString @NoArgsConstructor
 public class StateWaterAttraction extends MichiganAttraction {
     @Getter @Setter String id; // Not unique!!!!
-    @Getter @Setter String body;
+    @SerializedName("body") @Getter @Setter String county;
     @Getter @Setter String tackle;
     @SerializedName("county") @Getter @Setter String resourceType;
     @Getter @Setter String type;

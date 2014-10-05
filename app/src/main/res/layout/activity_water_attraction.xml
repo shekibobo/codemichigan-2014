@@ -1,0 +1,99 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="com.codebits.codemichigan.michiganoutdoors.activities.WaterAttractionActivity"
+    android:minHeight="50dp"
+    android:background="@color/cream">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Burton's Landing State Forest Water"
+        android:id="@+id/site_water_name_heading"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:fontFamily="sans-serif"
+        android:textColor="@color/blue"
+        android:textStyle="bold"
+        android:textSize="@dimen/activity_heading_text" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Locate"
+        android:id="@+id/site_locate_button"
+        android:drawableLeft="@drawable/ic_find_me"
+        android:drawablePadding="5dp"
+        android:fontFamily="sans-serif"
+        android:textStyle="bold"
+        android:textColor="@color/blue"
+        android:layout_below="@+id/water_county_text"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/button_shape"
+        android:gravity="left|fill_vertical"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp" />
+
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/scrollView"
+        android:layout_below="@+id/site_locate_button"
+        android:layout_centerHorizontal="true">
+
+    </ScrollView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="I am very good lorem you like these guppies? You wanna keep these guppies, well to bad because the minimum fish limit is definitely bigger than this guppy so you better put it back."
+        android:id="@+id/water_detailed_text"
+        android:textColor="@color/green"
+        android:fontFamily="sans-serif"
+        android:textSize="16sp"
+
+        android:lineSpacingExtra="5sp"
+        android:layout_below="@+id/water_extra_info_text"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="10dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="County"
+        android:textSize="16sp"
+        android:fontFamily="sans-serif"
+        android:textStyle="bold"
+        android:textColor="@color/green"
+        android:id="@+id/water_county_text"
+        android:layout_below="@+id/site_water_name_heading"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="10dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Additional Information"
+        android:textSize="16sp"
+        android:fontFamily="sans-serif"
+        android:textStyle="bold"
+        android:textColor="@color/blue"
+        android:id="@+id/water_extra_info_text"
+        android:layout_below="@+id/site_locate_button"
+        android:layout_alignRight="@+id/scrollView"
+        android:layout_alignEnd="@+id/scrollView"
+        android:layout_marginTop="10dp" />
+
+
+</RelativeLayout>

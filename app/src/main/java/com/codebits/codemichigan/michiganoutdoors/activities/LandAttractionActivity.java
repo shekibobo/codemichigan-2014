@@ -32,7 +32,6 @@ public class LandAttractionActivity extends Activity {
     @InjectView(R.id.site_county_text) TextView siteCountyAndCampingTypes;
     @InjectView(R.id.site_call_button) Button siteCallButton;
     @InjectView(R.id.site_permit_text) TextView sitePermitText;
-    @InjectView(R.id.site_locate_button) Button siteLocationButton;
     @InjectView(R.id.campground_detailed_text) TextView detailText;
 
     @Override
@@ -46,7 +45,10 @@ public class LandAttractionActivity extends Activity {
 
         siteNameHeading.setText(mLandAttraction.getName());
 
-        List<String> countyAndStyle = Arrays.asList(mLandAttraction.getCounty());
+        String county = mLandAttraction.getCounty();
+        if (!county.contains("County")) county += " County";
+        List<String> countyAndStyle = Arrays.asList(county);
+
         if (mLandAttraction.getCampingStyles() != null) countyAndStyle.add(mLandAttraction.getCampingStyles());
         siteCountyAndCampingTypes.setText(TextUtils.join(" | ", countyAndStyle));
 
@@ -56,12 +58,16 @@ public class LandAttractionActivity extends Activity {
             siteCallButton.setText(R.string.no_phone_number);
             siteCallButton.setEnabled(false);
         }
-        siteLocationButton.setText(R.string.locate);
-        sitePermitText.setText("Permit Required: " + (mLandAttraction.isPermitRequired() ? "Yes" : "No"));
+
+        String permitRequired = "Permit Required: " + (mLandAttraction.isPermitRequired() ? "Yes" : "No");
+        String entranceFee = "Entrance Fee: " + (mLandAttraction.isEntranceFee() ? "Yes" : "No");
+        String accessible = "Accessible: " + (mLandAttraction.isAccessible() ? "Yes" : "No");
+        sitePermitText.setText(TextUtils.join("\n", Arrays.asList(permitRequired, entranceFee, accessible)));
 
         List<String> otherStuff = new ArrayList<>();
         if (mLandAttraction.getDescription() != null) otherStuff.add(mLandAttraction.getDescription());
         if (mLandAttraction.getGroupRate() > 0) otherStuff.add("Group Rate: " + mLandAttraction.getGroupRate());
+        if (mLandAttraction.getOceSiteFee() > 0) otherStuff.add("OCE Site Fee: " + mLandAttraction.getOceSiteFee());
         if (mLandAttraction.getTotalNumOfSites() > 0) otherStuff.add("Total Number of Sites: " + mLandAttraction.getTotalNumOfSites());
         if (mLandAttraction.getVehicles() != null) otherStuff.add("Allowed Vehicles: " + mLandAttraction.getVehicles());
 
