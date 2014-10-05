@@ -2,36 +2,40 @@ package com.codebits.codemichigan.michiganoutdoors.data.models;
 
 import com.google.gson.annotations.SerializedName;
 
+import org.parceler.Parcel;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
 /**
  * Created by joshuakovach on 10/4/14.
  */
+@Parcel
 @ToString @NoArgsConstructor
 public class StateWaterAttraction extends MichiganAttraction {
-    @Getter String id; // Not unique!!!!
-    @Getter String body;
-    @Getter String tackle;
-    @SerializedName("county") @Getter String resourceType;
-    @Getter String type;
-    @Getter String note;
+    @Getter @Setter String id; // Not unique!!!!
+    @Getter @Setter String body;
+    @Getter @Setter String tackle;
+    @SerializedName("county") @Getter @Setter String resourceType;
+    @Getter @Setter String type;
+    @Getter @Setter String note;
 
-    @SerializedName("laketype") @Getter String openSeason;
-    @SerializedName("designatedtroutlakeorstream") @Getter boolean designatedTroutLakeOrStream;
-    @SerializedName("fishingseasonpossessionseason") @Getter String fishingSeasonPossessionSeason;
+    @SerializedName("laketype") @Getter @Setter String openSeason;
+    @SerializedName("designatedtroutlakeorstream") @Getter @Setter boolean designatedTroutLakeOrStream;
+    @SerializedName("fishingseasonpossessionseason") @Getter @Setter String fishingSeasonPossessionSeason;
 
-    @SerializedName("splakeminsize") @Getter String spLakeMinSize;
-    @SerializedName("atlanticsalmonminsize") @Getter String atlanticSalmonMinSize;
-    @SerializedName("chinookminsize") @Getter String chinookMinSize;
-    @SerializedName("brooktroutminsize") @Getter String brookTroutMinSize;
-    @SerializedName("pinksalmonminsize") @Getter String pinkSalmonMinSize;
-    @SerializedName("browntroutminsize") @Getter String brownTroutMinSize;
-    @SerializedName("cohosalmonminsize") @Getter String cohoSalmonMinSize;
-    @SerializedName("laketroutminsize") @Getter String lakeTroutMinSize;
-    @SerializedName("rainbowtroutminsize") @Getter String rainbowTroutMinSize;
-    @SerializedName("dailypossessionlimit") @Getter String dailyPossessionLimit;
+    @SerializedName("splakeminsize") @Getter @Setter String spLakeMinSize;
+    @SerializedName("atlanticsalmonminsize") @Getter @Setter String atlanticSalmonMinSize;
+    @SerializedName("chinookminsize") @Getter @Setter String chinookMinSize;
+    @SerializedName("brooktroutminsize") @Getter @Setter String brookTroutMinSize;
+    @SerializedName("pinksalmonminsize") @Getter @Setter String pinkSalmonMinSize;
+    @SerializedName("browntroutminsize") @Getter @Setter String brownTroutMinSize;
+    @SerializedName("cohosalmonminsize") @Getter @Setter String cohoSalmonMinSize;
+    @SerializedName("laketroutminsize") @Getter @Setter String lakeTroutMinSize;
+    @SerializedName("rainbowtroutminsize") @Getter @Setter String rainbowTroutMinSize;
+    @SerializedName("dailypossessionlimit") @Getter @Setter String dailyPossessionLimit;
 
     public static String toQuery() {
         return null;

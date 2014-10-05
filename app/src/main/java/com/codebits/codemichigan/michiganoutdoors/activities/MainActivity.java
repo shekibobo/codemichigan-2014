@@ -1,6 +1,7 @@
 package com.codebits.codemichigan.michiganoutdoors.activities;
 
 import android.app.ActionBar;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.DrawerLayout;
@@ -32,6 +33,8 @@ import com.codebits.codemichigan.michiganoutdoors.data.models.StreamAttraction;
 import com.codebits.codemichigan.michiganoutdoors.data.models.VisitorCenter;
 import com.codebits.codemichigan.michiganoutdoors.fragments.AttractionsFragment;
 import com.codebits.codemichigan.michiganoutdoors.fragments.FilterDrawerFragment;
+
+import org.parceler.Parcels;
 
 import butterknife.ButterKnife;
 
@@ -199,6 +202,11 @@ public class MainActivity extends FragmentActivity
 
     @Override
     public void onAttractionSelected(MichiganAttraction attraction) {
-        Log.i("Attraction selected", attraction.toString());
+        if (attraction.isLandAttraction()) {
+            StateLandAttraction landAttraction = (StateLandAttraction) attraction;
+            Intent intent = new Intent(this, LandAttractionActivity.class);
+            intent.putExtra("STATE_LAND_ATTRACTION", Parcels.wrap(landAttraction));
+            startActivity(intent);
+        }
     }
 }

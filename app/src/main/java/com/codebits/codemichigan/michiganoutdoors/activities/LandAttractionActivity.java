@@ -2,16 +2,24 @@ package com.codebits.codemichigan.michiganoutdoors.activities;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import com.codebits.codemichigan.michiganoutdoors.R;
+import com.codebits.codemichigan.michiganoutdoors.data.models.StateLandAttraction;
+
+import org.parceler.Parcels;
 
 public class LandAttractionActivity extends Activity {
+
+    StateLandAttraction mLandAttraction;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_land_attraction);
+
+        mLandAttraction = Parcels.unwrap(this.getIntent().getExtras().getParcelable("STATE_LAND_ATTRACTION"));
     }
 
 

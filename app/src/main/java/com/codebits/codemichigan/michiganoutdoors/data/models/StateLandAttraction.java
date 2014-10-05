@@ -5,50 +5,54 @@ import android.text.TextUtils;
 
 import com.google.gson.annotations.SerializedName;
 
+import org.parceler.Parcel;
+
 import java.util.ArrayList;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
 /**
  * Created by joshuakovach on 10/3/14.
  */
+@Parcel
 @ToString @NoArgsConstructor
 public class StateLandAttraction extends MichiganAttraction {
-    @Getter long id;
-    @Getter String phone;
-    @Getter String ttynum;
+    @Getter @Setter long id;
+    @Getter @Setter String phone;
+    @Getter @Setter String ttynum;
 
-    @SerializedName("unittype") @Getter String unitType;
-    @SerializedName("unitdescription") @Getter String resourceType;
-    @Getter String description;
-    @Getter String county;
+    @SerializedName("unittype") @Getter @Setter String unitType;
+    @SerializedName("unitdescription") @Getter @Setter String resourceType;
+    @Getter @Setter String description;
+    @Getter @Setter String county;
 
-    @Getter boolean cabin;
-    @Getter boolean yurt;
-    @Getter boolean rustic;
-    @Getter boolean modern;
-    @Getter boolean semimodern;
-    @Getter boolean teepee;
-    @Getter boolean minicabin;
-    @Getter boolean lodge;
+    @Getter @Setter boolean cabin;
+    @Getter @Setter boolean yurt;
+    @Getter @Setter boolean rustic;
+    @Getter @Setter boolean modern;
+    @Getter @Setter boolean semimodern;
+    @Getter @Setter boolean teepee;
+    @Getter @Setter boolean minicabin;
+    @Getter @Setter boolean lodge;
 
-    @Getter boolean boat;
-    @Getter boolean equestrian;
-    @SerializedName("orv") @Getter boolean offRoadVehicles;
+    @Getter @Setter boolean boat;
+    @Getter @Setter boolean equestrian;
+    @SerializedName("orv") @Getter @Setter boolean offRoadVehicles;
 
-    @Getter boolean walkin;
-    @SerializedName("permitrequired") @Getter boolean permitRequired;
-    @SerializedName("entrancefee") @Getter boolean entranceFee;
-    @SerializedName("ada") @Getter boolean accessible;
-    @Getter boolean active;
+    @Getter @Setter boolean walkin;
+    @SerializedName("permitrequired") @Getter @Setter boolean permitRequired;
+    @SerializedName("entrancefee") @Getter @Setter boolean entranceFee;
+    @SerializedName("ada") @Getter @Setter boolean accessible;
+    @Getter @Setter boolean active;
 
-    @SerializedName("ocesitefee") @Getter long oceSiteFee;
-    @SerializedName("grouprate") @Getter long groupRate;
-    @SerializedName("totalnumofsites") @Getter long totalNumOfSites;
+    @SerializedName("ocesitefee") @Getter @Setter long oceSiteFee;
+    @SerializedName("grouprate") @Getter @Setter long groupRate;
+    @SerializedName("totalnumofsites") @Getter @Setter long totalNumOfSites;
 
-    @SerializedName("location_1") @Getter Location location;
+    @SerializedName("location_1") @Getter @Setter Location location;
 
     private String vehicles;
     private String campingStyles;
