@@ -43,6 +43,7 @@
 
     <string name="filter_drawer_header_text">Tap to Filter</string>
     <string name="title_activity_splash_screen"></string>
+    <string name="title_activity_land_attraction">Land Attraction</string>
 
     <string name="cabin">Cabin</string>
     <string name="yurt">Yurt</string>
