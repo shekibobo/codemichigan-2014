@@ -1,14 +1,20 @@
 package com.codebits.codemichigan.michiganoutdoors.activities;
 
 import android.app.ActionBar;
+import android.content.Context;
 import android.content.Intent;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.DrawerLayout;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import com.codebits.codemichigan.michiganoutdoors.R;
 import com.codebits.codemichigan.michiganoutdoors.data.api.services.MichiganData;
@@ -24,6 +30,7 @@ import com.codebits.codemichigan.michiganoutdoors.data.models.StreamAttraction;
 import com.codebits.codemichigan.michiganoutdoors.data.models.VisitorCenter;
 import com.codebits.codemichigan.michiganoutdoors.fragments.FilterDrawerFragment;
 
+import java.security.Provider;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,6 +55,10 @@ public class MainActivity extends FragmentActivity
     private DrawerLayout mDrawerLayout;
     MichiganDataService dataService;
 
+    GPSTracker gps;
+
+    protected Context context;
+
     private Boolean landNotFound = false;
     private Boolean waterNotFound = false;
 
@@ -57,6 +68,9 @@ public class MainActivity extends FragmentActivity
         setContentView(R.layout.activity_main);
 
         actionBar = getActionBar();
+
+
+        gps = new GPSTracker(MainActivity.this);
 
         mFilterDrawerFragment = (FilterDrawerFragment)
                 getFragmentManager().findFragmentById(R.id.filter_drawer);
@@ -82,10 +96,34 @@ public class MainActivity extends FragmentActivity
 
     private void reloadResourcesFromFilters(String query) {
         resourceArray.clear();
-        AndroidObservable.bindActivity(this, Observable.merge(landAttractionRequest(query), waterAttractionRequest(query)))
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(s -> updateDataSet(s));
+        if (mFilterDrawerFragment.isChecked(FilterDrawerFragment.FIND_ME_FILTER_INDEX)) {
+            double longitude = 0;
+            double latitude = 0;
+            String res = null;
+            if(gps.canGetLocation()) {
+                latitude = gps.getLatitude();
+                longitude = gps.getLongitude();
+                Toast.makeText(getApplicationContext(), "Your location is: "+latitude + " Long: " + longitude, Toast.LENGTH_LONG).show();
+                res = "within_circle(location, " + latitude+ ", " + longitude + ", 32186) AND ";
+            } else {
+                gps.showSettingsAlert();
+                res = null;
+            }
+            if (latitude == 0 && longitude == 0) {
+                res = null;
+            }
+
+            AndroidObservable.bindActivity(this, Observable.merge(landAttractionRequest(query, res), waterAttractionRequest(query, res)))
+                    .subscribeOn(Schedulers.newThread())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(s -> updateDataSet(s));
+        } else {
+            AndroidObservable.bindActivity(this, Observable.merge(landAttractionRequest(query, null), waterAttractionRequest(query, null)))
+                    .subscribeOn(Schedulers.newThread())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(s -> updateDataSet(s));
+        }
+
         if (landNotFound && waterNotFound) {
             // Clear all items
             updateHeaderView();
@@ -97,7 +135,7 @@ public class MainActivity extends FragmentActivity
         }
     }
 
-    private Observable<List<StateWaterAttraction>> waterAttractionRequest(String query) {
+    private Observable<List<StateWaterAttraction>> waterAttractionRequest(String query, String location) {
         ArrayList<String> queriesForWater = new ArrayList<>(2);
         if (mFilterDrawerFragment.isChecked(FilterDrawerFragment.LAKE_FILTER_INDEX))
             queriesForWater.add(LakeAttraction.toQuery());
@@ -110,11 +148,16 @@ public class MainActivity extends FragmentActivity
             return Observable.empty();
         } else {
             String waterQuery = TextUtils.join(" OR ", queriesForWater);
+            waterQuery = "(" + waterQuery + ")";
+            if (location != null) {
+                waterQuery = location + waterQuery;
+            }
+            Log.d("Internets",waterQuery);
             return dataService.stateWaterAttractionList(waterQuery, query);
         }
     }
 
-    private Observable<List<StateLandAttraction>> landAttractionRequest(String query) {
+    private Observable<List<StateLandAttraction>> landAttractionRequest(String query, String location) {
         ArrayList<String> queriesForLand = new ArrayList<>(4);
         if (mFilterDrawerFragment.isChecked(FilterDrawerFragment.CAMPGROUND_FILTER_INDEX))
             queriesForLand.add(StateForestCampground.toQuery());
@@ -133,6 +176,11 @@ public class MainActivity extends FragmentActivity
             return Observable.empty();
         } else {
             String landQuery = TextUtils.join(" OR ", queriesForLand);
+            landQuery = "(" + landQuery + ")";
+            if (location != null) {
+                landQuery = location + landQuery;
+            }
+            Log.d("Internetz",landQuery);
             return dataService.stateLandAttractionList(landQuery, query);
         }
     }
@@ -222,6 +270,12 @@ public class MainActivity extends FragmentActivity
 
     @Override
     public void onFilterDrawerItemSelected() { reloadResourcesFromFilters(null); }
+
+    @Override
+    protected void onDestroy() {
+        gps.stopUsingGPS();
+        super.onDestroy();
+    }
 
     @Override
     public void onFilterDrawerClosed() {
