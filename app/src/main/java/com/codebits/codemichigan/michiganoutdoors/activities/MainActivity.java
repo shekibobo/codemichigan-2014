@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import com.codebits.codemichigan.michiganoutdoors.R;
 import com.codebits.codemichigan.michiganoutdoors.data.api.services.MichiganData;
@@ -85,7 +86,9 @@ public class MainActivity extends FragmentActivity
         AndroidObservable.bindActivity(this, Observable.merge(landAttractionRequest(query), waterAttractionRequest(query)))
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(s -> updateDataSet(s));
+                .subscribe(
+                        s -> updateDataSet(s),
+                        error -> Toast.makeText(this, error.getCause().toString(), Toast.LENGTH_SHORT));
         if (landNotFound && waterNotFound) {
             // Clear all items
             updateHeaderView();
