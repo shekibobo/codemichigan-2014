@@ -21,7 +21,7 @@
         <item>Lakes</item>
         <item>Streams</item>
         <item>Visitor Centers</item>
-        <item>Find Me</item>
+        <item>Near Me</item>
     </string-array>
 
     <string-array name="filter_icons">
