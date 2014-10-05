@@ -20,8 +20,7 @@
         <item name="android:icon">@drawable/ic_nav_pure_adventure</item>
     </style>
 
-    <style name="LandAttractionTheme" parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
-        <item name="android:background">@color/green</item>
+    <style name="LandAttractionTheme" parent="@android:style/Widget.Holo.Light.ActionBar.Solid">
         <item name="android:icon">@drawable/ic_nav_campground</item>
     </style>
 
