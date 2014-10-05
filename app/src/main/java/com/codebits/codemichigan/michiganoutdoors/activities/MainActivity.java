@@ -216,13 +216,7 @@ public class MainActivity extends FragmentActivity
                 @Override
                 public boolean onQueryTextSubmit(String query)
                 {
-                    query = searchView.getQuery().toString();
-                    if (!query.equals("")) {
-                        query = query + "*";
-                        reloadResourcesFromFilters(query);
-                    } else {
-                        reloadResourcesFromFilters(null);
-                    }
+                    reloadResourcesFromFilters(query);
                     return true;
                 }
             };
