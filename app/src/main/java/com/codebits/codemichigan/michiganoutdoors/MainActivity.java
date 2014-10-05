@@ -181,29 +181,20 @@ public class MainActivity extends FragmentActivity
     }
 
     private void updateHeaderView() {
-        String text="";
-        if (mFilterDrawerFragment.isChecked(FilterDrawerFragment.CAMPGROUND_FILTER_INDEX))
-            text = text + " " + "Campgrounds,";
+        String[] filters = getResources().getStringArray(R.array.filter_array);
+        ArrayList<String> appliedFilters = new ArrayList<>();
 
-        if (mFilterDrawerFragment.isChecked(FilterDrawerFragment.VISITOR_CENTER_FILTER_INDEX))
-            text = text + " " + "Visitor Centers,";
+        for (int i = 0; i < filters.length; i++) {
+            if (mFilterDrawerFragment.isChecked(i + 1)) {
+                appliedFilters.add(filters[i]);
+            }
+        }
 
-        if (mFilterDrawerFragment.isChecked(FilterDrawerFragment.TRAIL_FILTER_INDEX))
-            text = text + " " + "Trails,";
-
-        if (mFilterDrawerFragment.isChecked(FilterDrawerFragment.STATE_PARK_FILTER_INDEX))
-            text = text + " " + "State Parks,";
-
-        if (mFilterDrawerFragment.isChecked(FilterDrawerFragment.LAKE_FILTER_INDEX))
-            text = text + " " + "Lakes,";
-
-        if (mFilterDrawerFragment.isChecked(FilterDrawerFragment.STREAM_FILTER_INDEX))
-            text = text + " " + "Streams,";
-
-        if (!text.equals("")) {
-            text = text.substring(0, text.length() - 1);
-        } else {
+        String text = "";
+        if (appliedFilters.size() == 0) {
             text = "Swipe Right for Attractions!";
+        } else {
+            text = TextUtils.join(", ", appliedFilters);
         }
 
         pagerAdapter.getAttractionFragmentListView().getHeaderView().setText(text);
