@@ -10,9 +10,10 @@ import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.util.Log;
+import android.widget.SearchView;
 
 import com.codebits.codemichigan.michiganoutdoors.R;
+import com.codebits.codemichigan.michiganoutdoors.adapters.MainPagerAdapter;
 import com.codebits.codemichigan.michiganoutdoors.data.api.services.MichiganData;
 import com.codebits.codemichigan.michiganoutdoors.data.api.services.MichiganDataService;
 import com.codebits.codemichigan.michiganoutdoors.data.models.LakeAttraction;
@@ -22,23 +23,20 @@ import com.codebits.codemichigan.michiganoutdoors.data.models.StateLandAttractio
 import com.codebits.codemichigan.michiganoutdoors.data.models.StatePark;
 import com.codebits.codemichigan.michiganoutdoors.data.models.StateParkTrail;
 import com.codebits.codemichigan.michiganoutdoors.data.models.StateWaterAttraction;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import rx.Observable;
-import rx.android.observables.AndroidObservable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
-
-import com.codebits.codemichigan.michiganoutdoors.adapters.MainPagerAdapter;
 import com.codebits.codemichigan.michiganoutdoors.data.models.StreamAttraction;
 import com.codebits.codemichigan.michiganoutdoors.data.models.VisitorCenter;
 import com.codebits.codemichigan.michiganoutdoors.fragments.FilterDrawerFragment;
 import com.codebits.codemichigan.michiganoutdoors.fragments.MapFragment;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import rx.Observable;
+import rx.android.observables.AndroidObservable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 
 public class MainActivity extends FragmentActivity
@@ -99,18 +97,18 @@ public class MainActivity extends FragmentActivity
                 R.id.filter_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
 
-        reloadResourcesFromFilters();
+        reloadResourcesFromFilters(null);
     }
 
-    private void reloadResourcesFromFilters() {
+    private void reloadResourcesFromFilters(String query) {
         resourceArray.clear();
-        AndroidObservable.bindActivity(this, Observable.merge(landAttractionRequest(), waterAttractionRequest()))
+        AndroidObservable.bindActivity(this, Observable.merge(landAttractionRequest(query), waterAttractionRequest(query)))
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(s -> updateDataSet(s));
     }
 
-    private Observable<List<StateWaterAttraction>> waterAttractionRequest() {
+    private Observable<List<StateWaterAttraction>> waterAttractionRequest(String query) {
         ArrayList<String> queriesForWater = new ArrayList<>(2);
         if (mFilterDrawerFragment.isChecked(FilterDrawerFragment.LAKE_FILTER_INDEX))
             queriesForWater.add(LakeAttraction.toQuery());
@@ -122,11 +120,11 @@ public class MainActivity extends FragmentActivity
             return Observable.empty();
         } else {
             String waterQuery = TextUtils.join(" OR ", queriesForWater);
-            return dataService.stateWaterAttractionList(waterQuery, null);
+            return dataService.stateWaterAttractionList(waterQuery, query);
         }
     }
 
-    private Observable<List<StateLandAttraction>> landAttractionRequest() {
+    private Observable<List<StateLandAttraction>> landAttractionRequest(String query) {
         ArrayList<String> queriesForLand = new ArrayList<>(4);
         if (mFilterDrawerFragment.isChecked(FilterDrawerFragment.CAMPGROUND_FILTER_INDEX))
             queriesForLand.add(StateForestCampground.toQuery());
@@ -144,7 +142,7 @@ public class MainActivity extends FragmentActivity
             return Observable.empty();
         } else {
             String landQuery = TextUtils.join(" OR ", queriesForLand);
-            return dataService.stateLandAttractionList(landQuery, null);
+            return dataService.stateLandAttractionList(landQuery, query);
         }
     }
 
@@ -205,10 +203,37 @@ public class MainActivity extends FragmentActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         if (!mFilterDrawerFragment.isDrawerOpen()) {
-            // Only show items in the action bar relevant to this screen
-            // if the drawer is not showing. Otherwise, let the drawer
-            // decide what to show in the action bar
             getMenuInflater().inflate(R.menu.main, menu);
+
+            SearchView searchView = (SearchView) menu.findItem(R.id.menu_item_search).getActionView();
+
+            searchView.setIconifiedByDefault(true);
+            SearchView.OnQueryTextListener textChangeListener = new SearchView.OnQueryTextListener()
+            {
+
+                @Override
+                public boolean onQueryTextChange(String newText) { return true; }
+                @Override
+                public boolean onQueryTextSubmit(String query)
+                {
+                    query = searchView.getQuery().toString();
+                    if (!query.equals("")) {
+                        query = query + "*";
+                        reloadResourcesFromFilters(query);
+                    } else {
+                        reloadResourcesFromFilters(null);
+                    }
+                    return true;
+                }
+            };
+            searchView.setOnQueryTextListener(textChangeListener);
+            searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+                @Override
+                public boolean onClose() {
+                    reloadResourcesFromFilters(null);
+                    return false;
+                }
+            });
             restoreActionBar();
             return true;
         }
@@ -217,7 +242,7 @@ public class MainActivity extends FragmentActivity
 
     @Override
     public void onFilterDrawerItemSelected(int position) {
-        reloadResourcesFromFilters();
+        reloadResourcesFromFilters(null);
     }
 
     @Override
