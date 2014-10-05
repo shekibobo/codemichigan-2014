@@ -24,15 +24,24 @@ public class AttractionFragmentListView extends Fragment {
 
     private MichiganAttractionAdapter attractionAdapter;
     private ListView mListView;
+    private TextView mHeaderView;
 
     public MichiganAttractionAdapter getAdapter() {
         return this.attractionAdapter;
+    }
+
+    public TextView getHeaderView() {
+        return this.mHeaderView;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         mListView = (ListView) inflater.inflate(R.layout.michigan_attraction_list, container, false);
+        mHeaderView = (TextView) inflater.inflate(R.layout.michigan_attraction_list_header, mListView, false);
+        mListView.setHeaderDividersEnabled(true);
+        mHeaderView.setText("Swipe Right for Attractions!");
+        mListView.addHeaderView(mHeaderView);
 
         ArrayList<MichiganAttraction> li = new ArrayList<>();
 
