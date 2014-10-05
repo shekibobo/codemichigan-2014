@@ -42,7 +42,7 @@
         <item>@drawable/ic_visitor_center</item>
     </string-array>
 
-    <string name="filter_drawer_header_text">Tap to Filter</string>
+    <string name="filter_drawer_header_text">Tap Items to Find</string>
 
     <string name="title_activity_splash_screen"></string>
 </resources>
