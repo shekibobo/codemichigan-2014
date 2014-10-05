@@ -3,11 +3,9 @@ package com.codebits.codemichigan.michiganoutdoors.adapters;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.util.Log;
 
 import com.codebits.codemichigan.michiganoutdoors.fragments.AttractionFragmentListView;
 import com.codebits.codemichigan.michiganoutdoors.fragments.MapFragment;
-import com.codebits.codemichigan.michiganoutdoors.fragments.SuperAwesomeCardFragment;
 
 public class MainPagerAdapter extends FragmentPagerAdapter {
 
