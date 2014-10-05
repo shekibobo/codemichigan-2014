@@ -38,7 +38,8 @@
         android:layout_below="@+id/site_name_heading"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="10dp" />
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp" />
 
     <Button
         android:layout_width="wrap_content"
@@ -50,10 +51,15 @@
         android:textStyle="bold"
         android:textColor="@color/dynamic_red"
         android:drawableLeft="@drawable/ic_phone"
+        android:textAlignment="viewStart"
+        android:gravity="left|fill_vertical"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
         android:layout_below="@+id/site_county_text"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="10dp" />
+        android:background="@drawable/button_shape"
+        android:layout_marginRight="5dp" />
 
     <Button
         android:layout_width="wrap_content"
@@ -65,11 +71,16 @@
         android:fontFamily="sans-serif"
         android:textStyle="bold"
         android:textColor="@color/blue"
-        android:layout_above="@+id/site_permit_text"
-        android:layout_toRightOf="@+id/site_call_button"
         android:layout_toEndOf="@+id/site_call_button"
-        android:layout_alignRight="@+id/site_name_heading"
-        android:layout_alignEnd="@+id/site_name_heading" />
+        android:textAlignment="gravity"
+        android:gravity="left|fill_vertical"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:layout_alignTop="@+id/site_call_button"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:background="@drawable/button_shape"
+        android:layout_marginLeft="5dp" />
 
     <TextView
         android:layout_width="wrap_content"

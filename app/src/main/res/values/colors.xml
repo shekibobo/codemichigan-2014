@@ -5,4 +5,7 @@
     <color name="red">#c77966</color>
     <color name="red_disabled">#aa8f88</color>
     <color name="cream">#e2e4d7</color>
+    <color name="cream_subtle">#dcdece</color>
+    <color name="cream_medium">#bfc3a7</color>
+    <color name="cream_dark">#a4ab82</color>
 </resources>

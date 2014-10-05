@@ -32,7 +32,6 @@ public class LandAttractionActivity extends Activity {
     @InjectView(R.id.site_county_text) TextView siteCountyAndCampingTypes;
     @InjectView(R.id.site_call_button) Button siteCallButton;
     @InjectView(R.id.site_permit_text) TextView sitePermitText;
-    @InjectView(R.id.site_locate_button) Button siteLocationButton;
     @InjectView(R.id.campground_detailed_text) TextView detailText;
 
     @Override
@@ -46,7 +45,10 @@ public class LandAttractionActivity extends Activity {
 
         siteNameHeading.setText(mLandAttraction.getName());
 
-        List<String> countyAndStyle = Arrays.asList(mLandAttraction.getCounty());
+        String county = mLandAttraction.getCounty();
+        if (!county.contains("County")) county += " County";
+        List<String> countyAndStyle = Arrays.asList(county);
+
         if (mLandAttraction.getCampingStyles() != null) countyAndStyle.add(mLandAttraction.getCampingStyles());
         siteCountyAndCampingTypes.setText(TextUtils.join(" | ", countyAndStyle));
 
