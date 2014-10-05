@@ -27,7 +27,6 @@ import com.codebits.codemichigan.michiganoutdoors.fragments.FilterDrawerFragment
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.ButterKnife;
 import rx.Observable;
 import rx.android.observables.AndroidObservable;
 import rx.android.schedulers.AndroidSchedulers;
@@ -56,7 +55,6 @@ public class MainActivity extends FragmentActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ButterKnife.inject(this);
 
         actionBar = getActionBar();
 
