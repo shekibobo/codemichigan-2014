@@ -105,6 +105,7 @@
             android:id="@+id/campground_detailed_text"
             android:fontFamily="sans-serif"
             android:textColor="@color/green"
+            android:textSize="16sp"
             android:layout_below="@+id/site_permit_text"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />
