@@ -167,7 +167,6 @@ public class FilterDrawerFragment extends Fragment {
                 }
                 super.onDrawerClosed(drawerView);
                 if (!isAdded()) {
-
                     return;
                 }
 
@@ -192,7 +191,6 @@ public class FilterDrawerFragment extends Fragment {
 
                 getActivity().invalidateOptionsMenu(); // calls onPrepareOptionsMenu()
 
-
             }
         };
 
@@ -216,9 +214,7 @@ public class FilterDrawerFragment extends Fragment {
 
         // Select either the default item (0) or the last selected item.
         //selectItem(mCurrentSelectedPosition);
-
     }
-
 
     private void selectItem(int position) {
        // mCurrentSelectedPosition = position;
@@ -233,7 +229,6 @@ public class FilterDrawerFragment extends Fragment {
                 filterItemsCheckStatus[position] = true;
             }
         }
-
     }
 
     @Override
@@ -283,7 +278,6 @@ public class FilterDrawerFragment extends Fragment {
         if (mDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
