@@ -44,6 +44,7 @@
         <activity
             android:name=".activities.LandAttractionActivity"
             android:label="@string/title_activity_land_attraction"
+            android:theme="@style/LandAttractionTheme"
             android:parentActivityName=".activities.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
