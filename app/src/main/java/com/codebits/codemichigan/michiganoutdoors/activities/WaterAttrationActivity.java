@@ -11,6 +11,8 @@ import android.widget.ListView;
 import com.codebits.codemichigan.michiganoutdoors.R;
 import com.codebits.codemichigan.michiganoutdoors.data.models.StateWaterAttraction;
 
+import org.parceler.Parcels;
+
 public class WaterAttrationActivity extends Activity {
 
     private ListView lView;
@@ -20,8 +22,7 @@ public class WaterAttrationActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_water_attration);
-        lView = (ListView) findViewById(R.id.water_list_view);
-        //final Adapter adapter = new ArrayAdapter<String>(this,R.layout.michigan_attraction_list_item,sWaterAttraction);
+        sWaterAttraction = Parcels.unwrap(this.getIntent().getExtras().getParcelable("STATE_WATER_ATTRACTION"));
     }
 
 

@@ -245,6 +245,11 @@ public class MainActivity extends FragmentActivity
             Intent intent = new Intent(this, LandAttractionActivity.class);
             intent.putExtra("STATE_LAND_ATTRACTION", Parcels.wrap(landAttraction));
             startActivity(intent);
+        }else if(attraction.isWaterAttraction()){
+            StateWaterAttraction waterAttraction = (StateWaterAttraction) attraction;
+            Intent intent = new Intent(this, WaterAttrationActivity.class);
+            intent.putExtra("STATE_WATER_ATTRACTION",Parcels.wrap(waterAttraction));
+            startActivity(intent);
         }
     }
 }
