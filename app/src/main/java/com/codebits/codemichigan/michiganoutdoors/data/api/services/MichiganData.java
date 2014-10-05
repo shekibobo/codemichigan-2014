@@ -12,8 +12,10 @@ import retrofit.converter.GsonConverter;
  */
 public class MichiganData {
     RestAdapter restAdapter;
+    RestAdapter fccRestAdapter;
 
     @Getter MichiganDataService dataService;
+    @Getter FCCDataService fccDataService;
 
     public MichiganData() {
         OkHttpClient okHttpClient = new OkHttpClient();
@@ -26,5 +28,11 @@ public class MichiganData {
                 .build();
 
         dataService = restAdapter.create(MichiganDataService.class);
+
+        fccRestAdapter = new RestAdapter.Builder()
+                .setEndpoint("http://data.fcc.gov")
+                .setClient((new OkClient(okHttpClient)))
+                .build();
+        fccDataService = fccRestAdapter.create(FCCDataService.class);
     }
 }

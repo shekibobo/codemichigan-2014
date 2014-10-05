@@ -17,6 +17,7 @@ import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.codebits.codemichigan.michiganoutdoors.R;
+import com.codebits.codemichigan.michiganoutdoors.data.api.services.FCCDataService;
 import com.codebits.codemichigan.michiganoutdoors.data.api.services.MichiganData;
 import com.codebits.codemichigan.michiganoutdoors.data.api.services.MichiganDataService;
 import com.codebits.codemichigan.michiganoutdoors.data.models.LakeAttraction;
@@ -34,9 +35,11 @@ import java.security.Provider;
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit.RetrofitError;
 import rx.Observable;
 import rx.android.observables.AndroidObservable;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.observers.SafeSubscriber;
 import rx.schedulers.Schedulers;
 
 import com.codebits.codemichigan.michiganoutdoors.fragments.AttractionsFragment;
@@ -54,6 +57,7 @@ public class MainActivity extends FragmentActivity
     private AttractionsFragment mAttractionsFragment;
     private DrawerLayout mDrawerLayout;
     MichiganDataService dataService;
+    FCCDataService countyLocationService;
 
     GPSTracker gps;
 
@@ -80,7 +84,10 @@ public class MainActivity extends FragmentActivity
         mAttractionsFragment = AttractionsFragment.newInstance();
         getFragmentManager().beginTransaction().replace(R.id.container, mAttractionsFragment).commit();
 
-        dataService = new MichiganData().getDataService();
+        MichiganData mdat = new MichiganData();
+        dataService = mdat.getDataService();
+        countyLocationService = mdat.getFccDataService();
+
         resourceArray = new ArrayList<>();
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -100,27 +107,42 @@ public class MainActivity extends FragmentActivity
         if (mFilterDrawerFragment.isChecked(FilterDrawerFragment.FIND_ME_FILTER_INDEX)) {
             double longitude = 0;
             double latitude = 0;
-            String res = null;
+            String landLocale = null;
+            Observable<List<StateWaterAttraction>> waterNearMeRequest = null;
+
             if(gps.canGetLocation()) {
                 latitude = gps.getLatitude();
                 longitude = gps.getLongitude();
                 Toast.makeText(getApplicationContext(), "Your location is: "+latitude + " Long: " + longitude, Toast.LENGTH_LONG).show();
-                res = "within_circle(location, " + latitude+ ", " + longitude + ", 32186)";// AND ";
+                landLocale = "within_circle(location_1, " + latitude+ ", " + longitude + ", 32186) AND ";
+                waterNearMeRequest =
+                        countyLocationService.stateWaterAttractionList(latitude, longitude)
+                                .flatMap(s -> {
+                                    Log.wtf("Service", s.getCounty().getName());
+                                    return waterAttractionRequest(query, s.getCounty().getName());
+                                });
             } else {
                 gps.showSettingsAlert();
-                res = null;
+                waterNearMeRequest = waterAttractionRequest(query, null);
+                landLocale = null;
             }
             if (latitude == 0 && longitude == 0) {
-                res = null;
+                landLocale = null;
             }
 
-            AndroidObservable.bindActivity(this, Observable.merge(landAttractionRequest(query, res), waterAttractionRequest(query, res)))
+            Observable.merge(landAttractionRequest(query, landLocale), waterNearMeRequest)
                     .subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(s -> updateDataSet(s),
                             error -> {
-                                Toast.makeText(this, error.getMessage(), Toast.LENGTH_SHORT);
-                                Log.e("ERROR", error.getCause().getMessage());
+                                if (error instanceof RetrofitError) {
+                                    if (((RetrofitError) error).isNetworkError()) {
+                                        Toast.makeText(this, "There was an error connecting to the internet. Try again later", Toast.LENGTH_SHORT);
+                                    } else {
+                                        RetrofitError e = (RetrofitError) error;
+                                        Log.i("FAILURE1", e.getResponse().getUrl());
+                                    }
+                                }
                                 updateDataSet(new ArrayList<MichiganAttraction>());
                             });
         } else {
@@ -130,8 +152,14 @@ public class MainActivity extends FragmentActivity
                     .subscribe(
                             s -> updateDataSet(s),
                             error -> {
-                                Toast.makeText(this, error.getMessage(), Toast.LENGTH_SHORT);
-                                Log.e("ERROR", error.getCause().getMessage());
+                                if (error instanceof RetrofitError) {
+                                    if (((RetrofitError) error).isNetworkError()) {
+                                        Toast.makeText(this, "There was an error connecting to the internet. Try again later", Toast.LENGTH_SHORT);
+                                    } else {
+                                        RetrofitError e = (RetrofitError) error;
+                                        Log.i("FAILURE2", e.getResponse().toString());
+                                    }
+                                }
                                 updateDataSet(new ArrayList<MichiganAttraction>());
                             });
         }
@@ -146,7 +174,7 @@ public class MainActivity extends FragmentActivity
         }
     }
 
-    private Observable<List<StateWaterAttraction>> waterAttractionRequest(String query, String location) {
+    private Observable<List<StateWaterAttraction>> waterAttractionRequest(String query, String county) {
         ArrayList<String> queriesForWater = new ArrayList<>(2);
         if (mFilterDrawerFragment.isChecked(FilterDrawerFragment.LAKE_FILTER_INDEX))
             queriesForWater.add(LakeAttraction.toQuery());
@@ -160,10 +188,9 @@ public class MainActivity extends FragmentActivity
         } else {
             String waterQuery = TextUtils.join(" OR ", queriesForWater);
             waterQuery = "(" + waterQuery + ")";
-            if (location != null) {
-                waterQuery = location + waterQuery;
+            if (county != null) {
+                waterQuery = "body='" + county + " County' AND " + waterQuery;
             }
-            Log.d("Internets",waterQuery);
             return dataService.stateWaterAttractionList(waterQuery, query);
         }
     }
