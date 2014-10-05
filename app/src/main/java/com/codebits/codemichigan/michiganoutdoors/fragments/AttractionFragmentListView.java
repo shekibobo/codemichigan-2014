@@ -39,8 +39,7 @@ public class AttractionFragmentListView extends Fragment {
         attractionAdapter = new MichiganAttractionAdapter(getActivity().getApplicationContext(),
                 R.layout.michigan_attraction_list_item, li);
 
-        Log.wtf("Adapter", "Made adapter");
-        
+
         mListView.setAdapter(attractionAdapter);
 
 
