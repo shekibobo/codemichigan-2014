@@ -39,33 +39,10 @@
         android:layout_alignParentStart="true"
         android:layout_marginTop="10dp"
         android:background="@drawable/button_shape"
-        android:gravity="left|fill_vertical"
+        android:gravity="start|fill_vertical"
         android:paddingLeft="20dp"
         android:paddingRight="20dp" />
 
-    <ScrollView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/scrollView"
-        android:layout_below="@+id/site_locate_button"
-        android:layout_centerHorizontal="true">
-
-    </ScrollView>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="I am very good lorem you like these guppies? You wanna keep these guppies, well to bad because the minimum fish limit is definitely bigger than this guppy so you better put it back."
-        android:id="@+id/water_detailed_text"
-        android:textColor="@color/green"
-        android:fontFamily="sans-serif"
-        android:textSize="16sp"
-
-        android:lineSpacingExtra="5sp"
-        android:layout_below="@+id/water_extra_info_text"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="10dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -94,6 +71,27 @@
         android:layout_alignRight="@+id/scrollView"
         android:layout_alignEnd="@+id/scrollView"
         android:layout_marginTop="10dp" />
+
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/scrollView"
+        android:layout_below="@+id/water_extra_info_text"
+        android:layout_centerHorizontal="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="I am very good lorem you like these guppies? You wanna keep these guppies, well to bad because the minimum fish limit is definitely bigger than this guppy so you better put it back."
+            android:id="@+id/water_detailed_text"
+            android:textColor="@color/green"
+            android:fontFamily="sans-serif"
+            android:textSize="16sp"
+            android:lineSpacingExtra="5sp"
+            android:layout_marginTop="10dp"
+            android:isScrollContainer="true"/>
+
+    </ScrollView>
 
 
 </RelativeLayout>
