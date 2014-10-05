@@ -18,6 +18,7 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
+        android:fontFamily="sans-serif"
         android:textColor="@color/blue"
         android:textStyle="bold"
         android:textSize="@dimen/activity_heading_text" />
@@ -27,11 +28,72 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="Small Text"
-        android:id="@+id/textView"
-        android:layout_below="@+id/site_name_heading"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
+        android:id="@+id/site_county_text"
+        android:fontFamily="sans-serif"
         android:textSize="16sp"
         android:textStyle="bold"
-        android:textColor="@color/green" />
+        android:textColor="@color/green"
+        android:layout_below="@+id/site_name_heading"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="(269) 867 5309"
+        android:id="@+id/site_call_button"
+
+        android:fontFamily="sans-serif"
+        android:textStyle="bold"
+        android:textColor="@color/red"
+        android:drawableLeft="@drawable/ic_phone"
+        android:layout_below="@+id/site_county_text"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Permit Required: Yes"
+        android:id="@+id/site_permit_text"
+        android:fontFamily="sans-serif"
+        android:textColor="@color/blue"
+        android:textStyle="bold"
+        android:layout_below="@+id/site_call_button"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="#c8cabb"
+
+        android:paddingTop="5dp"
+        android:layout_above="@+id/campground_detail_text_layout"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/textView2" />
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/campground_detail_text_layout"
+        android:minHeight="335dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="montes glaciales in oceano Germanico ipsum dolor sit amet RIBEYE PORK? IS IT GOOD THO?"
+            android:id="@+id/campground_detailed_text"
+            android:fontFamily="sans-serif"
+            android:textColor="@color/green"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="15dp" />
+    </RelativeLayout>
+
 </RelativeLayout>
