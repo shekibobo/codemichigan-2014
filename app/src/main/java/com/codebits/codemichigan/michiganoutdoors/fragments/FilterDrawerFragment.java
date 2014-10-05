@@ -22,6 +22,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.codebits.codemichigan.michiganoutdoors.R;
+import com.codebits.codemichigan.michiganoutdoors.activities.MainActivity;
 import com.codebits.codemichigan.michiganoutdoors.adapters.FilterDrawerAdapter;
 
 /**
@@ -158,8 +159,14 @@ public class FilterDrawerFragment extends Fragment {
         ) {
             @Override
             public void onDrawerClosed(View drawerView) {
+                if (mCallbacks != null) {
+                    //Set header that its loading?
+                    mCallbacks.onFilterDrawerClosed();
+                    mCallbacks.onFilterDrawerItemSelected();
+                }
                 super.onDrawerClosed(drawerView);
                 if (!isAdded()) {
+
                     return;
                 }
 
@@ -183,6 +190,8 @@ public class FilterDrawerFragment extends Fragment {
                 }
 
                 getActivity().invalidateOptionsMenu(); // calls onPrepareOptionsMenu()
+
+
             }
         };
 
@@ -202,12 +211,16 @@ public class FilterDrawerFragment extends Fragment {
 
         mDrawerLayout.setDrawerListener(mDrawerToggle);
 
+        //mDrawerLayout.openDrawer(mDrawerLayout);
+
         // Select either the default item (0) or the last selected item.
-        selectItem(mCurrentSelectedPosition);
+        //selectItem(mCurrentSelectedPosition);
+
     }
 
+
     private void selectItem(int position) {
-        mCurrentSelectedPosition = position;
+       // mCurrentSelectedPosition = position;
         if (mDrawerListView != null) {
             if (filterItemsCheckStatus[position]) {
                 // Set listView item and tracking array item
@@ -219,9 +232,7 @@ public class FilterDrawerFragment extends Fragment {
                 filterItemsCheckStatus[position] = true;
             }
         }
-        if (mCallbacks != null) {
-            mCallbacks.onFilterDrawerItemSelected(position);
-        }
+
     }
 
     @Override
@@ -301,6 +312,7 @@ public class FilterDrawerFragment extends Fragment {
         /**
          * Called when an item in the navigation drawer is selected.
          */
-        void onFilterDrawerItemSelected(int position);
+        void onFilterDrawerItemSelected();
+        void onFilterDrawerClosed();
     }
 }

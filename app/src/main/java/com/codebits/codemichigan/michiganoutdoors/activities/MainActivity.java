@@ -44,9 +44,13 @@ public class MainActivity extends FragmentActivity
     ArrayList<MichiganAttraction> resourceArray;
     private FilterDrawerFragment mFilterDrawerFragment;
     private ActionBar actionBar;
-    MichiganDataService dataService;
 
     private AttractionsFragment mAttractionsFragment;
+    private DrawerLayout mDrawerLayout;
+    MichiganDataService dataService;
+
+    private Boolean landNotFound = false;
+    private Boolean waterNotFound = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,12 +71,15 @@ public class MainActivity extends FragmentActivity
         dataService = new MichiganData().getDataService();
         resourceArray = new ArrayList<>();
 
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+
         // Set up the drawer.
         mFilterDrawerFragment.setUp(
                 R.id.filter_drawer,
-                (DrawerLayout) findViewById(R.id.drawer_layout));
+                mDrawerLayout);
 
-        reloadResourcesFromFilters(null);
+
+        //reloadResourcesFromFilters(null);
     }
 
     private void reloadResourcesFromFilters(String query) {
@@ -81,6 +88,15 @@ public class MainActivity extends FragmentActivity
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(s -> updateDataSet(s));
+        if (landNotFound && waterNotFound) {
+            // Clear all items
+            updateHeaderView();
+            mAttractionsFragment.getAdapter().clear();
+            mAttractionsFragment.getAdapter().notifyDataSetChanged();
+
+        } else {
+            landNotFound = waterNotFound = false;
+        }
     }
 
     private Observable<List<StateWaterAttraction>> waterAttractionRequest(String query) {
@@ -92,6 +108,7 @@ public class MainActivity extends FragmentActivity
             queriesForWater.add(StreamAttraction.toQuery());
 
         if (queriesForWater.isEmpty()) {
+            waterNotFound = true;
             return Observable.empty();
         } else {
             String waterQuery = TextUtils.join(" OR ", queriesForWater);
@@ -114,6 +131,7 @@ public class MainActivity extends FragmentActivity
             queriesForLand.add(StatePark.toQuery());
 
         if (queriesForLand.isEmpty()) {
+            landNotFound = true;
             return Observable.empty();
         } else {
             String landQuery = TextUtils.join(" OR ", queriesForLand);
@@ -162,7 +180,7 @@ public class MainActivity extends FragmentActivity
 
         String text = "";
         if (appliedFilters.size() == 0) {
-            text = "Swipe Right for Attractions!";
+            text = "Swipe Right for Michigan Attractions!";
         } else {
             text = TextUtils.join(", ", appliedFilters);
         }
@@ -205,8 +223,11 @@ public class MainActivity extends FragmentActivity
     }
 
     @Override
-    public void onFilterDrawerItemSelected(int position) {
-        reloadResourcesFromFilters(null);
+    public void onFilterDrawerItemSelected() { reloadResourcesFromFilters(null); }
+
+    @Override
+    public void onFilterDrawerClosed() {
+        mAttractionsFragment.updateHeader("Loading...");
     }
 
     @Override
