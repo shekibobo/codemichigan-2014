@@ -27,7 +27,7 @@
             android:value="AIzaSyAz0dIjX-l8E0cvNXVec0ELrtSD1x_v_q8" />
 
         <activity
-            android:name=".MainActivity"
+            android:name=".activities.MainActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             >

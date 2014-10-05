@@ -2,10 +2,11 @@ package com.codebits.codemichigan.michiganoutdoors;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.content.Intent;
 import android.os.Handler;
+
+import com.codebits.codemichigan.michiganoutdoors.activities.MainActivity;
 
 public class SplashScreen extends Activity {
 

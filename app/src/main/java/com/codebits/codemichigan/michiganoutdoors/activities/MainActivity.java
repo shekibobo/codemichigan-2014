@@ -1,4 +1,4 @@
-package com.codebits.codemichigan.michiganoutdoors;
+package com.codebits.codemichigan.michiganoutdoors.activities;
 
 import android.app.ActionBar;
 import android.os.Bundle;
@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.util.Log;
 
+import com.codebits.codemichigan.michiganoutdoors.R;
 import com.codebits.codemichigan.michiganoutdoors.data.api.services.MichiganData;
 import com.codebits.codemichigan.michiganoutdoors.data.api.services.MichiganDataService;
 import com.codebits.codemichigan.michiganoutdoors.data.models.LakeAttraction;
