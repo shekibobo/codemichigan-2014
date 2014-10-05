@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import com.codebits.codemichigan.michiganoutdoors.MainActivity;
 import com.codebits.codemichigan.michiganoutdoors.R;
@@ -37,7 +38,7 @@ public class MapFragment extends Fragment {
 
     private static GoogleMap mMap;
     private static Double latitude, longitude;
-    private Button mapButton;
+    private ImageButton mapButton;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -46,7 +47,7 @@ public class MapFragment extends Fragment {
             return null;
         }
         view = inflater.inflate(R.layout.fragment_map, container, false);
-        mapButton = (Button) view.findViewById(R.id.map_button);
+        mapButton = (ImageButton) view.findViewById(R.id.map_button);
         mapButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
