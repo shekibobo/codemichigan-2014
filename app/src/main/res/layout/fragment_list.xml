@@ -1,20 +1,44 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <TextView android:id="@android:id/empty"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="361dp"
         android:text="No data"
         android:gravity="center"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:layout_gravity="center_horizontal|top"
+        android:layout_below="@+id/attraction_header"
+        android:layout_alignParentBottom="true" />
 
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/list_view"
-        android:layout_gravity="center_horizontal|top"
         android:background="@color/cream"
-        android:clickable="true" />
+        android:clickable="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/attraction_header"
+        android:layout_alignParentBottom="true" />
 
-</FrameLayout>
+    <TextView
+        android:id="@+id/attraction_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:clickable="false"
+        android:textIsSelectable="false"
+        android:textSize="18sp"
+        android:textColor="@color/blue"
+        android:fontFamily="sans-serif"
+        android:textStyle="bold"
+        android:layout_gravity="center_horizontal|top"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:background="@color/cream"
+        android:padding="10dp" />
+
+</RelativeLayout>

@@ -30,8 +30,8 @@ public class AttractionsFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
 
     @InjectView(R.id.list_view) ListView mListView;
+    @InjectView(R.id.attraction_header) TextView mHeaderView;
     private MichiganAttractionAdapter mAdapter;
-    private TextView mHeaderView;
 
     /**
      * @return A new instance of fragment TimeSlotsFragment.
@@ -54,10 +54,8 @@ public class AttractionsFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_list, container, false);
         ButterKnife.inject(this, root);
 
-        mHeaderView = (TextView) inflater.inflate(R.layout.michigan_attraction_list_header, mListView, false);
         mListView.setHeaderDividersEnabled(true);
         mHeaderView.setText("Swipe Right for Attractions!");
-        mListView.addHeaderView(mHeaderView);
 
         ArrayList<MichiganAttraction> li = new ArrayList<>();
 
