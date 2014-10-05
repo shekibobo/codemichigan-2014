@@ -15,13 +15,15 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Burton's Landing State Forest Campground"
         android:id="@+id/site_name_heading"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
         android:fontFamily="sans-serif"
         android:textColor="@color/blue"
         android:textStyle="bold"
-        android:textSize="@dimen/activity_heading_text" />
+        android:textSize="@dimen/activity_heading_text"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -35,7 +37,8 @@
         android:textColor="@color/green"
         android:layout_below="@+id/site_name_heading"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="10dp" />
 
     <Button
         android:layout_width="wrap_content"
@@ -49,7 +52,24 @@
         android:drawableLeft="@drawable/ic_phone"
         android:layout_below="@+id/site_county_text"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="10dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Locate"
+        android:id="@+id/site_locate_button"
+        android:drawableLeft="@drawable/ic_find_me"
+        android:drawablePadding="5dp"
+        android:fontFamily="sans-serif"
+        android:textStyle="bold"
+        android:textColor="@color/blue"
+        android:layout_above="@+id/site_permit_text"
+        android:layout_toRightOf="@+id/site_call_button"
+        android:layout_toEndOf="@+id/site_call_button"
+        android:layout_alignRight="@+id/site_name_heading"
+        android:layout_alignEnd="@+id/site_name_heading" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -62,17 +82,21 @@
         android:textStyle="bold"
         android:layout_below="@+id/site_call_button"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="10dp" />
 
-    <RelativeLayout
+    <ScrollView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
         android:id="@+id/campground_detail_text_layout"
-        android:minHeight="330dp">
+        android:minHeight="330dp"
+        android:layout_below="@+id/site_permit_text"
+        android:layout_marginTop="10dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
         <TextView
             android:layout_width="wrap_content"
@@ -81,25 +105,10 @@
             android:id="@+id/campground_detailed_text"
             android:fontFamily="sans-serif"
             android:textColor="@color/green"
-            android:layout_alignParentTop="true"
+            android:layout_below="@+id/site_permit_text"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginTop="15dp" />
-    </RelativeLayout>
+            android:layout_alignParentStart="true" />
+    </ScrollView>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Locate"
-        android:id="@+id/site_locate_button"
-        android:drawableLeft="@drawable/ic_find_me"
-        android:drawablePadding="5dp"
-        android:fontFamily="sans-serif"
-        android:textStyle="bold"
-        android:textColor="@color/blue"
-        android:layout_toEndOf="@+id/site_call_button"
-        android:layout_alignTop="@+id/site_call_button"
-        android:layout_alignRight="@+id/site_name_heading"
-        android:layout_alignEnd="@+id/site_name_heading" />
 
 </RelativeLayout>
