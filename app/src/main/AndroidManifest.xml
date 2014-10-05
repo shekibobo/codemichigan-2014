@@ -49,6 +49,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.codebits.codemichigan.michiganoutdoors.activities.MainActivity" />
         </activity>
+        <activity
+            android:name=".activities.WaterAttrationActivity"
+            android:label="@string/title_activity_water_attration" >
+        </activity>
     </application>
 
 </manifest>
